@@ -1,0 +1,375 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6301A15520D2A7F700AECFCC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A15420D2A7F700AECFCC /* AppDelegate.swift */; };
+		6301A15720D2A7F700AECFCC /* SmartConnectSdkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6301A15620D2A7F700AECFCC /* SmartConnectSdkVC.swift */; };
+		6301A15A20D2A7F700AECFCC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6301A15820D2A7F700AECFCC /* Main.storyboard */; };
+		6301A15C20D2A7FA00AECFCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6301A15B20D2A7FA00AECFCC /* Assets.xcassets */; };
+		6301A15F20D2A7FA00AECFCC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6301A15D20D2A7FA00AECFCC /* LaunchScreen.storyboard */; };
+		63BA33B320D2F3A7003DA8E4 /* LaunchScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BA33B220D2F3A7003DA8E4 /* LaunchScreenVC.swift */; };
+		63BA33BF20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BA33BE20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6354BD0820E296BC00F155FE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6301A15120D2A7F700AECFCC /* SdkSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SdkSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6301A15420D2A7F700AECFCC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6301A15620D2A7F700AECFCC /* SmartConnectSdkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartConnectSdkVC.swift; sourceTree = "<group>"; };
+		6301A15920D2A7F700AECFCC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6301A15B20D2A7FA00AECFCC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6301A15E20D2A7FA00AECFCC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6301A16020D2A7FA00AECFCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63BA33B220D2F3A7003DA8E4 /* LaunchScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenVC.swift; sourceTree = "<group>"; };
+		63BA33BE20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartConnectSdkPidRequestTVC.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6301A14E20D2A7F700AECFCC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6301A14820D2A7F700AECFCC = {
+			isa = PBXGroup;
+			children = (
+				6301A15320D2A7F700AECFCC /* SmartConnectSdkSampleApp */,
+				6301A15220D2A7F700AECFCC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6301A15220D2A7F700AECFCC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6301A15120D2A7F700AECFCC /* SdkSampleApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6301A15320D2A7F700AECFCC /* SmartConnectSdkSampleApp */ = {
+			isa = PBXGroup;
+			children = (
+				6301A15420D2A7F700AECFCC /* AppDelegate.swift */,
+				6301A15620D2A7F700AECFCC /* SmartConnectSdkVC.swift */,
+				63BA33BE20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift */,
+				6301A15820D2A7F700AECFCC /* Main.storyboard */,
+				63BA33B220D2F3A7003DA8E4 /* LaunchScreenVC.swift */,
+				6301A15B20D2A7FA00AECFCC /* Assets.xcassets */,
+				6301A15D20D2A7FA00AECFCC /* LaunchScreen.storyboard */,
+				6301A16020D2A7FA00AECFCC /* Info.plist */,
+			);
+			path = SmartConnectSdkSampleApp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6301A15020D2A7F700AECFCC /* SdkSampleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6301A17920D2A7FA00AECFCC /* Build configuration list for PBXNativeTarget "SdkSampleApp" */;
+			buildPhases = (
+				6301A14D20D2A7F700AECFCC /* Sources */,
+				6301A14E20D2A7F700AECFCC /* Frameworks */,
+				6301A14F20D2A7F700AECFCC /* Resources */,
+				6354BD0820E296BC00F155FE /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SdkSampleApp;
+			productName = SmartConnectDemo;
+			productReference = 6301A15120D2A7F700AECFCC /* SdkSampleApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6301A14920D2A7F700AECFCC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "Tharun Nallamothu";
+				TargetAttributes = {
+					6301A15020D2A7F700AECFCC = {
+						CreatedOnToolsVersion = 9.4;
+					};
+				};
+			};
+			buildConfigurationList = 6301A14C20D2A7F700AECFCC /* Build configuration list for PBXProject "Smart Connect SDK Sample App" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6301A14820D2A7F700AECFCC;
+			productRefGroup = 6301A15220D2A7F700AECFCC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6301A15020D2A7F700AECFCC /* SdkSampleApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6301A14F20D2A7F700AECFCC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6301A15F20D2A7FA00AECFCC /* LaunchScreen.storyboard in Resources */,
+				6301A15C20D2A7FA00AECFCC /* Assets.xcassets in Resources */,
+				6301A15A20D2A7F700AECFCC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6301A14D20D2A7F700AECFCC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6301A15720D2A7F700AECFCC /* SmartConnectSdkVC.swift in Sources */,
+				63BA33BF20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift in Sources */,
+				6301A15520D2A7F700AECFCC /* AppDelegate.swift in Sources */,
+				63BA33B320D2F3A7003DA8E4 /* LaunchScreenVC.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6301A15820D2A7F700AECFCC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6301A15920D2A7F700AECFCC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6301A15D20D2A7FA00AECFCC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6301A15E20D2A7FA00AECFCC /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6301A17720D2A7FA00AECFCC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6301A17820D2A7FA00AECFCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6301A17A20D2A7FA00AECFCC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/SmartConnectSdkSampleApp/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danlaw.smartconnect.sdk.sampleapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6301A17B20D2A7FA00AECFCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/SmartConnectSdkSampleApp/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.danlaw.smartconnect.sdk.sampleapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6301A14C20D2A7F700AECFCC /* Build configuration list for PBXProject "Smart Connect SDK Sample App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6301A17720D2A7FA00AECFCC /* Debug */,
+				6301A17820D2A7FA00AECFCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6301A17920D2A7FA00AECFCC /* Build configuration list for PBXNativeTarget "SdkSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6301A17A20D2A7FA00AECFCC /* Debug */,
+				6301A17B20D2A7FA00AECFCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6301A14920D2A7F700AECFCC /* Project object */;
+}
