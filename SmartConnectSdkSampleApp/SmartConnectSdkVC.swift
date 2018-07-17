@@ -199,18 +199,7 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
         }
         
     }
-    
-    //convertion we are using to convert kph to mph
-    private func convertToMPH(kph: Int) -> Int {
-        let mph = round(Double(kph) / 1.609344)
-        return Int(mph)
-    }
-    
-    //convertion we are using to convert kphs to mphs
-    private func convertToMPHS(kphs: Int) -> Double {
-        let mphs = round(Double(kphs) / 1.609344 * 10) / 10
-        return mphs
-    }
+
     
     
     //DLDongleDelegate methods
@@ -504,9 +493,9 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
             }
             
             
-            let maxDecl = convertToMPHS(kphs: maxDecelInKMHrSec)
+            
             //delegate method to pass values
-            connectionDelegate?.setEventPidsData(value: maxDecl, eventPidName: "HardBrake")
+            connectionDelegate?.setEventPidsData(value: maxDecelInKMHrSec, eventPidName: "HardBrake")
             
         case DLEventID.hardAcceleration: // Hard Acceleration Data
             
@@ -518,9 +507,9 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
                 return
             }
             
-            let maxAccel = convertToMPHS(kphs: maxAccelInKMHrSec)
+     
             //delegate method to pass values
-            connectionDelegate?.setEventPidsData(value: maxAccel, eventPidName: "HardAccel")
+            connectionDelegate?.setEventPidsData(value: maxAccelInKMHrSec, eventPidName: "HardAccel")
             
         default:
             return
