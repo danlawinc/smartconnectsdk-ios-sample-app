@@ -16,19 +16,6 @@
 		63BA33BF20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BA33BE20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		6354BD0820E296BC00F155FE /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		6301A15120D2A7F700AECFCC /* SdkSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SdkSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6301A15420D2A7F700AECFCC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,7 +80,6 @@
 				6301A14D20D2A7F700AECFCC /* Sources */,
 				6301A14E20D2A7F700AECFCC /* Frameworks */,
 				6301A14F20D2A7F700AECFCC /* Resources */,
-				6354BD0820E296BC00F155FE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -116,6 +102,7 @@
 				TargetAttributes = {
 					6301A15020D2A7F700AECFCC = {
 						CreatedOnToolsVersion = 9.4;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -302,9 +289,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -318,7 +306,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.danlaw.smartconnect.sdk.sampleapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -327,9 +315,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -343,7 +332,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.danlaw.smartconnect.sdk.sampleapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

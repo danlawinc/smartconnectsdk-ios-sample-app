@@ -23,11 +23,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app uses your location to show you your current location on a map and compute your speed and acceleration</string>
+	<string>This app uses your location to auto connect with your danlaw datalogger</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
+	<string>This app uses your location to auto connect with your danlaw datalogger</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app uses your location to show you your current location on a map and compute your speed and acceleration</string>
+	<string>This app uses your location to auto connect with your danlaw datalogger</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
@@ -43,6 +43,10 @@
 	</array>
 	<key>UIRequiresFullScreen</key>
 	<true/>
+	<key>UIStatusBarHidden</key>
+	<false/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -136,7 +136,7 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
         
-         let messageText = NSMutableAttributedString( string: msg, attributes: [ NSAttributedStringKey.paragraphStyle: paragraphStyle, NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: UIFontTextStyle.body), NSAttributedStringKey.foregroundColor : UIColor.black ] )
+         let messageText = NSMutableAttributedString( string: msg, attributes: [ NSAttributedString.Key.paragraphStyle: paragraphStyle, NSAttributedString.Key.font : UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body), NSAttributedString.Key.foregroundColor : UIColor.black ] )
         
         alertView.setValue(messageText, forKey: "attributedMessage")
         
@@ -216,7 +216,7 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
     //If DATALOGGER disconnect itself from App without user Action bellow func will display alert and enables back button.
     func disconnectAlert(isDisConnected: Bool) {
         if isDisConnected == true{
-            let newBackButton = UIBarButtonItem(title: "<Back", style: UIBarButtonItemStyle.done, target: self, action: #selector(self.goback))
+            let newBackButton = UIBarButtonItem(title: "<Back", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.goback))
             newBackButton.tintColor = .white
             self.navigationItem.leftBarButtonItem = newBackButton
         }

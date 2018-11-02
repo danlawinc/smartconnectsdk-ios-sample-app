@@ -26,7 +26,7 @@ class LaunchScreenVC: UIViewController,DLAuthDelegate {
     override func viewWillAppear(_ animated: Bool) {
         //Making Authenticaion request in order to get instance of GatewayInterface. Please check Danlaw SDK document for more info. If don't have Auth token please contact mobile@danlawinc.com to get the IOS Mobile frameworks and the API KEY for you to be using before start developing application.
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.main.async {
             //Please use APi Key provided by danlaw
             //App won't start in this condition So please request new Token from  mobile@danlawinc.com and make sure you have internet connection
             DLAuthInterface.sharedInstance.validateToken(apiKey: YOUR API KEY, issuedTo: Bundle.main, delegate: self)

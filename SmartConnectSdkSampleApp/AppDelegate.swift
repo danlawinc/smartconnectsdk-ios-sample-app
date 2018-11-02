@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var strLabel = UILabel()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
        
         return true
@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             
             self.activityIndicator.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
-            self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+            self.activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge
             self.activityIndicator.center = CGPoint(x: self.loadingView.frame.size.width / 2, y: self.loadingView.frame.size.height / 2);
             self.loadingView.addSubview(self.activityIndicator)
             

@@ -32,9 +32,10 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setNeedsStatusBarAppearanceUpdate()
         
         //navigation bar settings
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         self.navigationController?.navigationBar.tintColor = UIColor.white
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.17, green:0.20, blue:0.55, alpha:1.0)
         
@@ -74,10 +75,10 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        UIApplication.shared.statusBarStyle = .lightContent
-        
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return devicesFound.count
     }
@@ -162,9 +163,9 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
     //Once connection starts it will take couple of secs to connect and if there is anything wrong while connection in progress sdk sends failed response by using call back within that call back bellow alert shows.
     func failedToconnectAlert(){
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "", message: "Disconnected", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "", message: "Disconnected", preferredStyle: UIAlertController.Style.alert)
             alert.view.layoutIfNeeded()
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -172,7 +173,7 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
     //Once connection starts it will take couple of secs to connect and sdk starts to send commands while it's happening until app gets either success or failure commands App will show below alert.
     func makeAlert(title: String, msg: String){
         DispatchQueue.main.async {
-            self.alertView = UIAlertController(title: title, message: msg, preferredStyle: UIAlertControllerStyle.alert)
+            self.alertView = UIAlertController(title: title, message: msg, preferredStyle: UIAlertController.Style.alert)
             self.alertView?.view.layoutIfNeeded()
             self.present(self.alertView!, animated: true, completion: nil)
         }
