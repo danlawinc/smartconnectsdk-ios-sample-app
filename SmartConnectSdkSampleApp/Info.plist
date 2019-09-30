@@ -54,6 +54,8 @@
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>This app uses your bluetooth to auto connect with your danlaw datalogger</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>This app uses your bluetooth to talkto danlaw datalogger</string>
+	<string>This app uses your bluetooth to talk to danlaw datalogger</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
