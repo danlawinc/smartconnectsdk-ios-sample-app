@@ -36,22 +36,25 @@ class LaunchScreenVC: UIViewController,DLAuthDelegate {
     //Authentication callback Once it's sucess will naviagte to SmartConnectSdkVC.
     //Please check SDK Danlaw SDK document for more info.
     func onAuthenticationResult(authenticationResult: Int, message: String) {
-        if authenticationResult == 200{
-            //we are directing to SmartConnectSdkVC once got 200 request
-            if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "smartConnectSdkVC") as? SmartConnectSdkVC
-            {
-                //confirming delegate
-                self.gatewayDelegate = vc.self
-                self.gatewayDelegate?.getwayGetInstance()
-                //Navigating to Main Screen After getting GatewayInstance
-                let navController = UINavigationController(rootViewController: vc)
-                self.present(navController, animated:true, completion: nil)
+        
+        DispatchQueue.main.async {
+            if authenticationResult == 200{
+                //we are directing to SmartConnectSdkVC once got 200 request
+                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "smartConnectSdkVC") as? SmartConnectSdkVC
+                {
+                    //confirming delegate
+                    self.gatewayDelegate = vc.self
+                    self.gatewayDelegate?.getwayGetInstance()
+                    //Navigating to Main Screen After getting GatewayInstance
+                    let navController = UINavigationController(rootViewController: vc)
+                    self.present(navController, animated:true, completion: nil)
+                }
+                
+            }else{
+                //display alert or some custom action
+                //App won't start in this condition So please request new Token from  mobile@danlawinc.com and make sure you have internet connection
+                
             }
-            
-        }else{
-            //display alert or some custom action
-            //App won't start in this condition So please request new Token from  mobile@danlawinc.com and make sure you have internet connection
-            
         }
     }
     
