@@ -47,6 +47,7 @@ class LaunchScreenVC: UIViewController,DLAuthDelegate {
                     self.gatewayDelegate?.getwayGetInstance()
                     //Navigating to Main Screen After getting GatewayInstance
                     let navController = UINavigationController(rootViewController: vc)
+                    navController.modalPresentationStyle = .fullScreen
                     self.present(navController, animated:true, completion: nil)
                 }
                 
