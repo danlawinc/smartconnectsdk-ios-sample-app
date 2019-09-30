@@ -172,32 +172,32 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
         }
     }
     
-    //GetFuel Level from basic data channel, Once button pressed this delegate method will call
+    //GetFuel Level from basic data channel, Once button pressed this delegate method will be called
     @IBAction func getFuelLevel(_ sender: Any) {
         delegate?.getBasicPidData()
     }
     
-    //Register data pids through advanced channel, Once button pressed this delegate method will call
+    //Register data pids through advanced channel, Once button pressed this delegate method will be called
     @IBAction func registerDpids(_ sender: Any) {
         delegate?.registerDataPids()
     }
     
-    //UNRegister data pids through advanced channel, Once button pressed this delegate method will call
+    //UNRegister data pids through advanced channel, Once button pressed this delegate method will be called
     @IBAction func unRegisterDpids(_ sender: Any) {
         delegate?.unRegisterDataPids()
     }
     
-    //Register Event pids through advanced channel, Once button pressed this delegate method will call
+    //Register Event pids through advanced channel, Once button pressed this delegate method will be called
     @IBAction func registerEpids(_ sender: Any) {
         delegate?.registerEventPids()
     }
     
-    //UNRegister data pids through advanced channel, Once button pressed this delegate method will call
+    //UNRegister data pids through advanced channel, Once button pressed this delegate method will be called
     @IBAction func unRegisterEpids(_ sender: Any) {
         delegate?.unRegisterEventPids()
     }
     
-    //Once DisConnect Button Pressed dongleDisconnect delegate willl triggered
+    //Once Disconnect Button Pressed dongleDisconnect delegate will be triggered
     @IBAction func disConnectFromDongle(_ sender: Any) {
         // Go back to the previous ViewController
         DLSettings.shared.connectionStatus = true
@@ -213,7 +213,7 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
     
     //DLDongleConnectionDelegate methods
     
-    //If DATALOGGER disconnect itself from App without user Action bellow func will display alert and enables back button.
+    //If DATALOGGER disconnect itself from App without user action, below func will display alert and enables back button.
     func disconnectAlert(isDisConnected: Bool) {
         if isDisConnected == true{
             let newBackButton = UIBarButtonItem(title: "<Back", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.goback))

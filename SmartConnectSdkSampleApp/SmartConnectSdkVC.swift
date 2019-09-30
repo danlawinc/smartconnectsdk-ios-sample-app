@@ -42,7 +42,7 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
         //clearing out devicesfound dict
         devicesFound = [:]
         
-        //checking is bluetooth enabled or not. Once requset sent App will revice response through call back func onBluetoothEnabled.
+        //checking is bluetooth enabled or not. Once requset sent, App will revice response through call back func onBluetoothEnabled.
         _ = self.gateway?.isBluetoothEnabled()
     }
     
@@ -319,7 +319,7 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
         }
     }
     
-    //Once devices found if Auto connection on it will found the index of favorite device.
+    //Once devices found if Auto connection is enabled, it will find the index of favorite device.
     private func findIndexOfFavorite(deviceName: String) -> Int {
         var index = 0
         
@@ -360,13 +360,13 @@ protocol DLDongleConnectionDelegate {
 extension SmartConnectSdkVC: DLGatewayDelegate{
     
     
-    //This will trigger once StopScan called from app or from sdk. If Sacntime done after starts scan it will get scanTimeOut is true, if user click on device and starts connection progress it will return false.
+    //This will trigger once StopScan called from app or from sdk. If scantime done after starts scan it will get scanTimeOut is true, if user click on device and starts connection progress it will return false.
     func onScanStopped(scanTimeOut: Bool) {
         self.scanStoped()
     }
     
     func onBluetoothEnabled(enabled: Bool) {
-        //Cals when bluetoth enables or not. Please make sure bluetooth is on for scanning and connecting.
+        //This method is called when Bluetooth status is changed(enabled/disabled). Please make sure bluetooth is on for scanning and connecting.
     }
     
     //Once scan starts this fun will triggered if there is any device that founds in range.
@@ -528,22 +528,22 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
             
         }
     }
-    //this call back is to download firware update for bleap devices
-    func fotaDowloadRequest(responseCode: Int) {
-        
-    }
+//this callback is to download firware update for bleap devices
+//    func fotaDowloadRequest(responseCode: Int) {
+//
+//    }
     
-    //wifi cal back response for adding wifi network to device
+    //wifi callback response for adding wifi network to device
     func addingWiFiNetwork(responseCode: Int) {
         
     }
     
-    //wifi cal back response for deleting wifi network from device
+    //wifi callback response for deleting wifi network from device
     func deleteWiFiNetwork(responseCode: Int) {
         
     }
     
-    //wifi cal back to response it will all the available list og wifi network names for that device
+    //wifi callback to response it will all the available list of wifi network names for that device
     func configureListWiFiNetworks(responseCode: Int, data: [String]) {
         
     }
