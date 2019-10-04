@@ -222,6 +222,11 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
     func getBasicPidData() {
         //check SDK document for more info
         _ = self.gateway?.readBasicPidData(pid: pids["fuelLevel"]!)
+        
+    }
+    
+    func getGPSBasicData() {
+        _ = self.gateway?.readBasicPidData(pid: pids["gps"]!)
     }
     
     //Once registerDataPids delegate method will triggered here passing specific basic/Advanced pid number and Sends the request to the DataLogger to register an array of data Pids. Once pid number sent and if it's supported by Vechicle App will get response data. DPid: The ID of the Pid Array
@@ -313,6 +318,18 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
             //passing data to delegate
             connectionDelegate?.setDataFromChannels(value: fuel,  pidName: "fuelLevel")
             
+        case DLCommandPId.basic.GPSBasic: // GPS
+        
+            guard let gpsData = object as? DLGPS else {
+                return
+            }
+            
+            guard let latitude = gpsData.latitude, let longitude = gpsData.longitude else {
+                return
+            }
+            //passing data to delegate
+            connectionDelegate?.setGPSFromChannels(latitude: latitude, longitude: longitude)
+            
         default:
             return
             
@@ -352,6 +369,7 @@ final class DLSettings{
 protocol DLDongleConnectionDelegate {
     func disconnectAlert(isDisConnected : Bool)
     func setDataFromChannels(value: Int, pidName: String)
+    func setGPSFromChannels(latitude: Double, longitude: Double)
     func setEventPidsData(value: Double, eventPidName: String)
     func unRegisterDPids(isSuccess: Bool)
     func unRegisterEPids(isSuccess: Bool)
@@ -423,7 +441,7 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
     //Gateway uses this method when the DataLogger responds back with the data for the `readBasicPidData` interface call
     func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?) {
         if responseCode != DLResponseCode.success {
-            print("Received Failing Response Code", "<<<<<<<<<< \(pid)")
+            print("Received Failing Response Code: \(responseCode) for pid:", "<<<<<<<<<< \(pid)")
             return
         }
         guard let pidObject = object else {

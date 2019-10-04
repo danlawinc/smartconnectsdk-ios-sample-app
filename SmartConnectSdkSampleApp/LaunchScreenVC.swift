@@ -12,7 +12,7 @@ import SmartConnectSDK
 class LaunchScreenVC: UIViewController,DLAuthDelegate {
     //Object reference of gatewayInterfaceInstance protocal
     var gatewayDelegate: gatewayInterfaceInstance?
-    
+    var apiKey = "YOUR_API_KEY"
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +29,7 @@ class LaunchScreenVC: UIViewController,DLAuthDelegate {
         DispatchQueue.main.async {
             //Please use APi Key provided by danlaw
             //App won't start in this condition So please request new Token from  mobile@danlawinc.com and make sure you have internet connection
-            DLAuthInterface.sharedInstance.validateToken(apiKey: YOUR API KEY, issuedTo: Bundle.main, delegate: self)
+            DLAuthInterface.sharedInstance.validateToken(apiKey: self.apiKey, issuedTo: Bundle.main, delegate: self)
         }
     }
     
@@ -52,6 +52,9 @@ class LaunchScreenVC: UIViewController,DLAuthDelegate {
                 }
                 
             }else{
+                
+                print(message)
+                
                 //display alert or some custom action
                 //App won't start in this condition So please request new Token from  mobile@danlawinc.com and make sure you have internet connection
                 

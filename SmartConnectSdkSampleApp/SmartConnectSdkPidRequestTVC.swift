@@ -12,7 +12,10 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
     
     var delegate : DLDongleDelegate?
     @IBOutlet weak var fuelLevel: UILabel!
+    @IBOutlet weak var latitudeLabel: UILabel!
+    @IBOutlet weak var longitudeLabel: UILabel!
     @IBOutlet weak var fuelLevelButton: UIButton!
+    @IBOutlet weak var gpsDataButton: UIButton!
     @IBOutlet weak var registerDpidButton: UIButton!
     @IBOutlet weak var speedValue: UILabel!
     @IBOutlet weak var unRegisterDpidButton: UIButton!
@@ -35,6 +38,7 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
         
         //button layer settings
         self.setupButtonStyles(sender: fuelLevelButton)
+        self.setupButtonStyles(sender: gpsDataButton)
         self.setupButtonStyles(sender: registerDpidButton)
         self.setupButtonStyles(sender: unRegisterDpidButton)
         self.setupButtonStyles(sender: registerEpidButton)
@@ -93,9 +97,9 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
     
     //Set Custom Rows for each Section in tableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1{
+        if section == 1 || section == 0 {
             return 2
-        }else if section == 0 || section == 2 || section == 3{
+        }else if section == 2 || section == 3{
             return 1
         }else{
             return 0
@@ -112,9 +116,9 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
     //Adding Alerts for tableview cells
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         if indexPath.section == 0{
-            if indexPath.row == 0{
+           // if indexPath.row == 0{
                 self.customAlertForCells(title: "Basic Data Channel - Data PIDs", msg: "Only data PIDs (Standard ODB and Non OBD/Custom PIDs) can be requested through basic data channel and not event PIDs.\nPIDs requested through this channel do not receive realtime continuous updates.")
-            }
+           // }
         }else if indexPath.section == 1{
             if indexPath.row == 0{
                 self.customAlertForCells(title: "Advanced Data Channel - Data PIDs", msg: "Standard ODB data PIDs and Event PIDs can be requested through advanced data channel.\nNon OBD/Custom PIDs cannot be requested through advanced data channel.\nPIDs requested through this channel continue to receive updates in realtime until they are unregistered.")
@@ -177,6 +181,11 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
         delegate?.getBasicPidData()
     }
     
+    //Get GPS from basic data channel, Once button pressed this delegate method will be called
+    @IBAction func getGPSData(_ sender: Any) {
+        delegate?.getGPSBasicData()
+    }
+    
     //Register data pids through advanced channel, Once button pressed this delegate method will be called
     @IBAction func registerDpids(_ sender: Any) {
         delegate?.registerDataPids()
@@ -235,6 +244,11 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
         
     }
     
+    func setGPSFromChannels(latitude: Double, longitude: Double) {
+        self.latitudeLabel.text = "\(latitude)"
+        self.longitudeLabel.text = "\(longitude)"
+    }
+    
     //If is there any data that comming From Adanced channels EPids bellow func will trigger and display text in labels.
     func setEventPidsData(value: Double, eventPidName: String){
         if eventPidName == "HardAccel"{
@@ -264,6 +278,7 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
 protocol DLDongleDelegate {
     func dongleDisconnect(event: String)
     func getBasicPidData()
+    func getGPSBasicData()
     func registerDataPids()
     func unRegisterDataPids()
     func registerEventPids()
