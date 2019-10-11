@@ -19,9 +19,11 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
     var gatewayDelegate: gatewayInterfaceInstance?
     var alertView: UIAlertController?
     var gateway:DLGatewayInterface?
+    var bleapInterface:DLBleapInterface?
     var connectionDelegate : DLDongleConnectionDelegate?
     var currentConnectionIndex: Int?
     let defaults:UserDefaults = UserDefaults.standard
+    var udpManager: UDPManager?
     var pids: [String: Int] = [//getting pids from sdk and storing it in dict
         "speed": DLCommandPId.basic.vehicleSpeed,
         "rpm": DLCommandPId.basic.engineRPM,
@@ -201,7 +203,20 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
         
     }
 
-    
+    func bleapGetInstance() {
+        DispatchQueue.main.async {
+            do {
+                //var bleapInterface:DLBleapInterface
+                try self.bleapInterface = DLBleapInterface.getInstance()
+                self.udpManager = UDPManager(bleapInterface: self.bleapInterface!)
+                self.bleapInterface!.setDelegate(delegate: self.udpManager!)
+            }catch DLException.SdkNotAuthenticatedException(let error) {
+                print(error)
+            }catch let error1 as NSError{
+                print(error1)
+            }
+        }
+    }
     
     //DLDongleDelegate methods
     
@@ -409,6 +424,7 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
             self.dismissAlert()
             let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "pidInfo") as! SmartConnectSdkPidRequestTVC
             VC1.delegate = self
+            udpManager!.udpDelegate = VC1
             self.connectionDelegate = VC1.self as? DLDongleConnectionDelegate
             self.navigationController?.pushViewController(VC1, animated: false)
         }else if connectionStatus == DLConnectionStatus.checkingHealthStatusFailed || connectionStatus == DLConnectionStatus.authenticationFailed || connectionStatus == DLConnectionStatus.disconnected{
@@ -546,10 +562,6 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
             
         }
     }
-//this callback is to download firware update for bleap devices
-//    func fotaDowloadRequest(responseCode: Int) {
-//
-//    }
     
     //wifi callback response for adding wifi network to device
     func addingWiFiNetwork(responseCode: Int) {

@@ -45,6 +45,10 @@ class LaunchScreenVC: UIViewController,DLAuthDelegate {
                     //confirming delegate
                     self.gatewayDelegate = vc.self
                     self.gatewayDelegate?.getwayGetInstance()
+                    
+                    /// Get Bleap interface instance only if you are creating app for Bleap-Device
+                    vc.bleapGetInstance()
+                    
                     //Navigating to Main Screen After getting GatewayInstance
                     let navController = UINavigationController(rootViewController: vc)
                     navController.modalPresentationStyle = .fullScreen

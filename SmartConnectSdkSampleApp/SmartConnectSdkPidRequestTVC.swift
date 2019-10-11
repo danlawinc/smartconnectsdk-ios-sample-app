@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDelegate {
+class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDelegate, UDPDataDelegate {
     
     var delegate : DLDongleDelegate?
     @IBOutlet weak var fuelLevel: UILabel!
@@ -27,6 +27,11 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
     @IBOutlet weak var autoConnectSwitch: UISwitch!
     @IBOutlet weak var autoConnectLabel: UILabel!
     @IBOutlet weak var disConnectButton: UIButton!
+    @IBOutlet weak var gpsMsgLatitude: UILabel!
+    @IBOutlet weak var gpsMsgLongitude: UILabel!
+    @IBOutlet weak var gpsMsgDate: UILabel!
+    
+    
     let defaults:UserDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
@@ -92,14 +97,14 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        return 4
+        return 5
     }
     
     //Set Custom Rows for each Section in tableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 || section == 0 {
             return 2
-        }else if section == 2 || section == 3{
+        }else if section == 2 || section == 3 || section == 4{
             return 1
         }else{
             return 0
@@ -126,6 +131,8 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
                 self.customAlertForCells(title: "Advanced Data Channel - Event PIDs", msg: "Event PIDs can only be requested through advanced data channel.\nPIDs requested through this channel continue to receive updates in realtime until they are unregistered.")
             }
         }else if indexPath.section == 2{
+                self.customAlertForCells(title: "UDP Data Channel", msg: "Bleap Device")
+        }else if indexPath.section == 3{
                 self.customAlertForCells(title: "AutoConnect", msg: "If Auto Connect is turned on app will set the connected device as favorite and then the app will try to connect to the device automatically during any foreground or background (triggered by location change) scans.")
         }
         
@@ -272,6 +279,18 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
         self.eventValue.text = "--"
     }
     
+    func updateGPSMessageData(latitude: String, longitude: String, date: String) {
+        
+        print("reached to tableview controller")
+        
+        gpsMsgDate.text = date
+        gpsMsgLatitude.text = latitude
+        gpsMsgLongitude.text = longitude
+    }
+}
+
+protocol UDPDataDelegate {
+    func updateGPSMessageData(latitude: String, longitude: String, date: String)
 }
 
 //DLDongleDelegate is passing data from self class to SmartConnectSdkVC. 
