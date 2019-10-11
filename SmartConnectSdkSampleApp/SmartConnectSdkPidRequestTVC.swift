@@ -131,7 +131,7 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
                 self.customAlertForCells(title: "Advanced Data Channel - Event PIDs", msg: "Event PIDs can only be requested through advanced data channel.\nPIDs requested through this channel continue to receive updates in realtime until they are unregistered.")
             }
         }else if indexPath.section == 2{
-                self.customAlertForCells(title: "UDP Data Channel", msg: "Bleap Device")
+                self.customAlertForCells(title: "UDP Data Channel", msg: "If app is connected to Bleap device, application will receive data via UDP channel. App cannot register or unregister for UDP Data.")
         }else if indexPath.section == 3{
                 self.customAlertForCells(title: "AutoConnect", msg: "If Auto Connect is turned on app will set the connected device as favorite and then the app will try to connect to the device automatically during any foreground or background (triggered by location change) scans.")
         }

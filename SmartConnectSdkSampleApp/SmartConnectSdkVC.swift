@@ -402,7 +402,7 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
         //This method is called when Bluetooth status is changed(enabled/disabled). Please make sure bluetooth is on for scanning and connecting.
     }
     
-    //Once scan starts this fun will triggered if there is any device that founds in range.
+    //Once scan starts this func will triggered if there is any device that founds in range.
     func onOBDDeviceFound(deviceName: String, identifier: String) {
         if isNotDuplicate(device: deviceName) {
             print("Device Found: \(deviceName)")
