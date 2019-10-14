@@ -73,11 +73,11 @@ do {
 }
 ``` 
 
-2. Scan for devices, scan results are received in delegate method of DLGatewayDelegate ```func onOBDDeviceFound(deviceName: String, identifier: String)```
+2. Scan for devices, scan results are received in delegate method of DLGatewayDelegate `onOBDDeviceFound`:
 
 ```gateway.startScan(start: true)```
 
-3. Connect to device using the `deviceName` returned in `onOBDDeviceFound`:
+3. Connect to device using the `deviceName` returned in `func onOBDDeviceFound(deviceName: String, identifier: String)`:
 
 ```gateway.connect(name: deviceName)```
 
@@ -91,13 +91,15 @@ do {
 
 ```gateway.forgetDevice()```
 
-Auto-connect requires to access Bluetooth access and Location service enabled "Always".<br />
+Auto-connect requires Bluetooth access and Location service enabled to "Always".<br />
 Add ```gateway.enableiBeaconServices(isBeaconMonitoring: true)``` and ```gateway.startBackgroundScan(start: true)``` in ```func applicationDidEnterBackground(_ application: UIApplication)``` method to enable background wakeups
 
 
-# Request & Read Basic PIDs
+# Basic PIDs
 
-Datalogger uses Basic channel to send basic pids. Request PID using following method:
+Datalogger uses Basic channel to send basic pids. App needs to send request everytime it requires PID's data<br />
+
+Request PID using following method:
 
 ```let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.VIN)```
 
@@ -120,9 +122,9 @@ func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?)
      }
 }
 ```
-# Request & Read Advanced PIDs
+# Advanced PIDs
 
-Datalogger uses Advanced channel to send advanced/event pids. Mobile app has to request/register advanced pids once and device will keep sending events for registered pids in real time. <br />Use following interface method to register for Events.
+Datalogger uses Advanced channel to send advanced/event pids. Mobile app has to register advanced pids once and device will keep sending events for registered pids in real time. <br />Use following interface method to register for Events.
 
 ```let isEPidsRegistered = gateway.registerEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration, DLEventID.idling, DLEventID.tripStart, DLEventID.tripEnd])```
 
@@ -149,7 +151,7 @@ func onEventPidDataReceived(responseCode: Int, EPid: Int, object: DLDataObject?)
 At a time, app can request maximum 5 pids in one array. <br />
 App can use `unregisterEventPid(pids: [Int])-> Bool` to stop receiveing Event/Advanced pids via advanced channel
 
-# Request & Read Data PIDs
+# Data PIDs
 
 App can request Basic or Advanced channel to get Data Pids from Datalogger.<br />App can use Basic channel to request Data Pid that does not required to be updated continuously<br />Request Data Pid using Basic channel:
 
@@ -188,9 +190,9 @@ func onDataPidDataReceived(responseCode: Int, DPid: Int, hashmap: [Int : DLBasic
     }
 ```
 
-# Read UDP Events
+# UDP Events
 
-App cannot request/register or unregister for UDP events. DataLogger will send UDP events if it has any Data packet in its memory<br />
+App cannot register or unregister for UDP events. DataLogger will send UDP events if it has any Data packet in its memory<br />
 
 Get instance of Bleap Interface
 
