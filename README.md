@@ -207,7 +207,7 @@ do {
 }
  ```
 
-App needs to send acknowledgement after receiving each UDP packet from Device. SDK has “onSendAcknowledgement” value set to true by default. Override this flag to “false” to send acknowledgement manually.
+App needs to send acknowledgement after receiving each UDP packet from Device. SDK has “onSendAcknowledgement” value set to true by default. Set this flag to “false” to send acknowledgement manually.
 
 ```bleapInterface.onAutoSendAcknowledgement(onSendAcknowledgement: false)```
 
