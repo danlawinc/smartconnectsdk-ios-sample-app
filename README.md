@@ -226,7 +226,7 @@ func onBleapUDPDataParsed(udpMessages: [UDPMessage], acknowledgementId: Data) {
        let messageId = message.messageType
        switch messageId {
           case DLEventID.GPSMessage:
-              guard let obj = object as? DLGPSMessage else { return }
+              guard let obj = messagePayload as? DLGPSMessage else { return }
               guard let messageHeader = obj.header else { return }
               if let time = messageHeader.time, let lat = messageHeader.lattitude, let long = messageHeader.longitude {                         print(“Latitude: \(lat), Longitude:\(long), time: \(time)”) }
                if let satellite = obj.noOfSatellite {
