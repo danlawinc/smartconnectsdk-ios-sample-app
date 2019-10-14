@@ -97,7 +97,7 @@ Add ```gateway.enableiBeaconServices(isBeaconMonitoring: true)``` and ```gateway
 
 # Basic PIDs
 
-Datalogger uses Basic channel to send basic pids. App needs to send request everytime it requires PID's data<br />
+Datalogger uses Basic channel to send basic pids. App needs to send request everytime it requires PID's data.<br /><br />
 
 Request PID using following method:
 
@@ -124,7 +124,7 @@ func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?)
 ```
 # Advanced PIDs
 
-Datalogger uses Advanced channel to send advanced/event pids. Mobile app has to register advanced pids once and device will keep sending events for registered pids in real time. <br />Use following interface method to register for Events.
+Datalogger uses Advanced channel to send advanced/event pids. Mobile app has to register advanced pids once and device will keep sending events for registered pids in real time.<br /> <br />Use following interface method to register for Events.
 
 ```let isEPidsRegistered = gateway.registerEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration, DLEventID.idling, DLEventID.tripStart, DLEventID.tripEnd])```
 
@@ -149,11 +149,11 @@ func onEventPidDataReceived(responseCode: Int, EPid: Int, object: DLDataObject?)
 }
 ```
 At a time, app can request maximum 5 pids in one array. <br />
-App can use `unregisterEventPid(pids: [Int])-> Bool` to stop receiveing Event/Advanced pids via advanced channel
+App can use `unregisterEventPid(pids: [Int])-> Bool` to stop receiveing Event/Advanced pids via advanced channel.<br />
 
 # Data PIDs
 
-App can request Basic or Advanced channel to get Data Pids from Datalogger.<br />App can use Basic channel to request Data Pid that does not required to be updated continuously<br />Request Data Pid using Basic channel:
+App can request Basic or Advanced channel to get Data Pids from Datalogger.<br />App can use Basic channel to request Data Pid that does not required to be updated continuously.<br /><br />Request Data Pid using Basic channel:
 
 ```let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.MAFRate)```
 
@@ -161,8 +161,8 @@ App can use Advanced channel to request Data Pid that needs to be updated contin
 
 ```gateway.registerDataPid(DPid: 1, pids: [DLCommandPId.basic.vehicleSpeed])```
 
-Parameter “DPid” is constant Int value that is used to unregister Data Pids<br />
-App can register multiple Data pids at a same time in array. But if one Data pid fails to register, then all the other pids are failed to register<br />
+Parameter “DPid” is constant Int value that is used to unregister Data Pids.<br /><br />
+App can register multiple Data pids at a same time in array. But if one Data pid fails to register, then all the other pids are failed to register.<br /><br />
 App can use `unregisterDataPid(DPid: Int, pids: [Int]) -> Bool` to stop receiveing data pids via advanced channel.
 
 SDK uses following method to respond with received Data Pid's data:
