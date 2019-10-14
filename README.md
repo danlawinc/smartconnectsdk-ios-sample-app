@@ -153,7 +153,8 @@ App can use `unregisterEventPid(pids: [Int])-> Bool` to stop receiveing Event/Ad
 
 # Data PIDs
 
-App can request Basic or Advanced channel to get Data Pids from Datalogger.<br />App can use Basic channel to request Data Pid that does not required to be updated continuously.<br /><br />Request Data Pid using Basic channel:
+App can use Basic or Advanced channel to request Data Pids from Datalogger.<br />App can use Basic channel to request Data Pid that does not required to be updated continuously.<br />
+<br />Request Data Pid using Basic channel:
 
 ```let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.MAFRate)```
 
