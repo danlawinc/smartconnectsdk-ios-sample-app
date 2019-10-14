@@ -186,7 +186,7 @@ func onDataPidDataReceived(responseCode: Int, DPid: Int, hashmap: [Int : DLBasic
 
 # UDP Events
 
-App cannot request/register or unregister for UDP events. DataLogger will send UDP events if it has any Data packet in its memory<br />br /<>
+App cannot request/register or unregister for UDP events. DataLogger will send UDP events if it has any Data packet in its memory<br />
 
 Get instance of Bleap Interface
 
