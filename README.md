@@ -97,7 +97,7 @@ Add ```gateway.enableiBeaconServices(isBeaconMonitoring: true)``` and ```gateway
 
 # Basic PIDs
 
-Datalogger uses Basic channel to send basic pids. App needs to send request everytime it requires PID's data.<br /><br />
+Datalogger uses Basic channel to send basic pids. App needs to call this method everytime, it needs to request PID's data.<br />
 
 Request PID using following method:
 
