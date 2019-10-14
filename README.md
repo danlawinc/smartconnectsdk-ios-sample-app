@@ -11,10 +11,10 @@ To build the project, just **copy the SDK (.framework file) to Frameworks folder
 4. [Authentication](#authentication)
 5. [Connecting to Datalogger](#connecting-to-datalogger)
 6. [Auto-Connect](#auto-connect)
-7. [Basic PIDs](#basic-pids)
-8. [Advanced PIDs](#advanced-pids)
-9. [Data PIDs](#data-pids)
-10. [UDP Events](#udp-events)
+7. [Request & Read Basic PIDs](#request-&-read-basic-pids)
+8. [Request & Read Advanced PIDs](#request-&-read-advanced-pids)
+9. [Request & Read Data PIDs](#request-&-read-data-pids)
+10. [Read UDP Events](#read-udp-events)
 11. [FAQ](#faq)
 12. [Credits](#credits)
 
@@ -91,7 +91,11 @@ do {
 
 ```gateway.forgetDevice()```
 
-# Basic PIDs
+Auto-connect requires to access Bluetooth access and Location service enabled "Always".<br />
+Add ```gateway.enableiBeaconServices(isBeaconMonitoring: true)``` and ```gateway.startBackgroundScan(start: true)``` in ```func applicationDidEnterBackground(_ application: UIApplication)``` method to enable background wakeups
+
+
+# Request & Read Basic PIDs
 
 Datalogger uses Basic channel to send basic pids. Request PID using following method:
 
@@ -116,7 +120,7 @@ func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?)
      }
 }
 ```
-# Advanced PIDs
+# Request & Read Advanced PIDs
 
 Datalogger uses Advanced channel to send advanced/event pids. Mobile app has to request/register advanced pids once and device will keep sending events for registered pids in real time. <br />Use following interface method to register for Events.
 
@@ -145,7 +149,7 @@ func onEventPidDataReceived(responseCode: Int, EPid: Int, object: DLDataObject?)
 At a time, app can request maximum 5 pids in one array. <br />
 App can use `unregisterEventPid(pids: [Int])-> Bool` to stop receiveing Event/Advanced pids via advanced channel
 
-# Data PIDs
+# Request & Read Data PIDs
 
 App can request Basic or Advanced channel to get Data Pids from Datalogger.<br />App can use Basic channel to request Data Pid that does not required to be updated continuously<br />Request Data Pid using Basic channel:
 
@@ -184,7 +188,7 @@ func onDataPidDataReceived(responseCode: Int, DPid: Int, hashmap: [Int : DLBasic
     }
 ```
 
-# UDP Events
+# Read UDP Events
 
 App cannot request/register or unregister for UDP events. DataLogger will send UDP events if it has any Data packet in its memory<br />
 
