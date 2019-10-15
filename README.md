@@ -11,12 +11,11 @@ To build the project, just **copy the SDK (.framework file) to Frameworks folder
 4. [Authentication](#authentication)
 5. [Connecting to Datalogger](#connecting-to-datalogger)
 6. [Auto-Connect](#auto-connect)
-7. [Basic PIDs](#basic-pids)
-8. [Advanced PIDs](#advanced-pids)
-9. [Data PIDs](#data-pids)
-10. [UDP Events](#udp-events)
-11. [FAQ](#faq)
-12. [Credits](#credits)
+7. [Basic Channel](#basic-channel)
+8. [Advanced Channel](#advanced-channel)
+9. [UDP Channel](#udp-channel)
+10. [FAQ](#faq)
+11. [Credits](#credits)
 
 
 
@@ -125,7 +124,9 @@ Datalogger uses Basic channel to send data pids and custom data pids. Datalogger
  1. Standard Pids (id: 0-255) (Refer Page.55-56 of Danlaw SmartConnect Installation guide)<br />
  2. Danlaw's Custom PIDs (id: 256 and over) (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
 
-Request custom PID(VIN Number) using Basic Channel method:
+### Custom PID using Basic Channel:
+
+Request VIN Number:
 
 ```let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.VIN)```
 
@@ -149,7 +150,9 @@ func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?)
 }
 ```
 
-Request Data PID(MAF Rate) using Basic Channel method:
+### Data PID using Basic Channel:
+
+Request MAF Rate:
 
 ```let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.MAFRate)```
 
@@ -177,18 +180,20 @@ func onDataPidDataReceived(responseCode: Int, DPid: Int, hashmap: [Int : DLBasic
 
 Datalogger uses Advanced channel to send Event pids and Data pids. Mobile app has to register pids once and device will keep sending events for registered pids in real time.<br /> 
 
-- Data that can be requested using Basic channel:<br />
+- Data that can be requested using Advanced channel:<br />
  1. Standard Pids (id: 0-255) (Refer Page.55-56 of Danlaw SmartConnect Installation guide)<br />
- 2. Event PIDs (id: 256 and over) (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
- Note: Event PIDs have to be preconfigured in datalogger to receive real time events.
+ 2. Event PIDs (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
+ **Note:** Event PIDs have to be preconfigured in datalogger to receive real time events.
 
-<br />Request Event Pids using Advanced channel.
+<br />
+### Event PID using Advanced Channel:
+Request Hard brake, Hard acceleration, Idling event, trip start and trip end using Advanced channel.
 
 ```
 let isEPidsRegistered = gateway.registerEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration, DLEventID.idling, DLEventID.tripStart, DLEventID.tripEnd])
 ```
 
-SDK uses following method to respond with received Event data:
+SDK uses following method to respond with received Event(Hard Braking event) data:
 
 ```
 /**
@@ -213,7 +218,7 @@ func onEventPidDataReceived(responseCode: Int, EPid: Int, object: DLDataObject?)
         }}
 }
 ```
-At a time, app can request maximum 5 pids in one array. <br />
+At a time, app can request maximum 5 pids. <br />
 
 Unregister Event Pids to stop receiving updates:
 ```
@@ -224,8 +229,9 @@ Unregister Event Pids to stop receiving updates:
 unregisterEventPid(pids: [Int])-> Bool
 ```
 <br />
+### Data PID using Advanced Channel:
 
-Request Data Pids(Vehicle Speed) using Advanced channel for continous update.
+Request Vehicle Speed using Advanced channel for continous update.
 
 ```
 /**
@@ -236,7 +242,7 @@ Request Data Pids(Vehicle Speed) using Advanced channel for continous update.
 gateway.registerDataPid(DPid: 1, pids: [DLCommandPId.basic.vehicleSpeed])
 ```
 
-NOTE: App can register multiple Data pids at a same time in array. But if one Data pid fails to register, then all the other pids are failed to register.<br /><br />
+**NOTE:** App can register multiple Data pids at a same time in array. But if one Data pid fails to register, then all the other pids are failed to register.<br /><br />
 
 SDK uses following method to respond with received Data Pid's data:
 
@@ -273,13 +279,13 @@ unregisterDataPid(DPid: Int, pids: [Int]) -> Bool
 
 Datalogger logs every event occured in realtime and sends it via UDP channel when datalogger is connected to mobile app. 
 App cannot register or unregister for UDP events.<br />
-Bydefault mobile app acts as pass thru to send UDP events to Danlaw Server. But datalogger with BLEAP configuration, UDP Events are delivered to mobile app.
+By default mobile app acts as pass thru to send UDP events to Danlaw Server. But for datalogger with BLEAP configuration, UDP Events are delivered to the mobile app.
 
 - Data that can be received using UDP channel:<br />
- 1. Event PIDs (id: 256 and over) (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
- Note: Event PIDs have to be preconfigured in datalogger to receive udp events.
+ 1. Event PIDs (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
+ **Note:** Event PIDs have to be preconfigured in datalogger to receive udp events.
  
-- No registration is required to receive UDP events. Implement `DLBleapInterface` and `DLBleapUDPDataDelegate` to receive UDP events sent by Device:
+- Implement `DLBleapInterface` and `DLBleapUDPDataDelegate` to receive UDP events sent by Device:
 <br />
 
 1. Get instance of Bleap Interface
@@ -298,7 +304,11 @@ do {
 
 ```bleapInterface.onAutoSendAcknowledgement(onSendAcknowledgement: false)```
 
-DLBleapUDPDataDelegate method to receive Parsed UDP Data:
+**NOTE:**<br />
+If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again.<br />
+Once acknowledgement is sent to datalogger, datalogger will erase that data from its memory.<br />
+
+3. DLBleapUDPDataDelegate method to receive Parsed UDP Data:
 
 ```
 func onBleapUDPDataParsed(udpMessages: [UDPMessage], acknowledgementId: Data) {
@@ -325,8 +335,6 @@ func onBleapUDPDataParsed(udpMessages: [UDPMessage], acknowledgementId: Data) {
 }
 
 ```
-If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again.<br />
-Once acknowledgement is sent to datalogger, datalogger will erase that data from its memory
 
 
 # FAQ
