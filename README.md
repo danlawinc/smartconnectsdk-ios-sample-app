@@ -303,13 +303,8 @@ By default mobile app acts as pass thru to send UDP events to Danlaw Server. But
 /**
  - parameter delegate: instance of implementing class DLBleapUDPDataDelegate
 */
-do {
-    var bleapInterface:DLBleapInterface
-    try self.bleapInterface = DLBleapInterface.getInstance()
-    bleapInterface.setDelegate(delegate: 'instance of implementing class of DLBleapUDPDataDelegate')
-}catch DLException.SdkNotAuthenticatedException(let error) {
-    print(error)
-}
+var bleapInterface = DLBleapInterface.getInstance()
+bleapInterface.setDelegate(delegate: self)
  ```
 
 2. Set this flag to “false” to send acknowledgement manually.(Default value: true)
