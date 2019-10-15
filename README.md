@@ -123,7 +123,7 @@ gateway.setFavoriteDevice(name: deviceName, identifier: identifier)
 
 Auto-connect requires Bluetooth access and Location service enabled to "Always".<br /> Auto connect works in all states of mobile app(Active, InActive, Background, Suspended, Non-Running)<br />
 Add ```gateway.enableiBeaconServices(isBeaconMonitoring: true)``` and ```gateway.startBackgroundScan(start: true)``` in ```func applicationDidEnterBackground(_ application: UIApplication)``` method to enable background wakeups<br />
-Add required Privacy permission property keys in app's info.plist(Refer Page.13 of Danlaw SmartConnect Installation guide)
+Add required Privacy permission property keys in app's info.plist(Refer 'Getting started with iOS' section of Danlaw SmartConnect Installation guide)
 
 
 # Get PID Data
