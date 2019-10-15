@@ -51,7 +51,7 @@ To build the project, just **copy the SDK (.framework file) to Frameworks folder
 - DLBleapUDPDataDelegate: This `protocol DLBleapUDPDataDelegate` defines the callbacks required for the delegate on the `DLBleapInterface`.
 
 # Authentication
-After installing the SDK, **you MUST authenticate it before you can use all the interfaces**. 
+After installing the SDK, **app MUST authenticate it before it can use all the interfaces**. 
 To authenticate the SDK, use the following method:
 
 ```
@@ -93,11 +93,21 @@ do {
 
 2. Scan for devices, scan results are received in delegate method of DLGatewayDelegate `onOBDDeviceFound`:
 
-```gateway.startScan(start: true)```
+```
+/**
+ - parameter start: true to start scan and false to stop scan
+*/
+gateway.startScan(start: true)
+```
 
 3. Connect to device using the `deviceName` returned in `func onOBDDeviceFound(deviceName: String, identifier: String)`:
 
-```gateway.connect(name: deviceName)```
+```
+/**
+ - parameter name: String (deviceName received in 'onOBDDeviceFound')
+*/
+gateway.connect(name: deviceName)
+```
 
 # Auto-Connect
 
@@ -105,7 +115,13 @@ SmartConnect SDK allows mobile app to connect to Datalogger automatically. To en
 
 1. Set a device as favorite:
 
-```gateway.setFavoriteDevice(name: deviceName, identifier: identifier)```
+```
+/**
+ - parameter name: String (deviceName received in 'onOBDDeviceFound')
+ - parameter identifier: String (identifier received in 'onOBDDeviceFound')
+*/
+gateway.setFavoriteDevice(name: deviceName, identifier: identifier)
+```
 
 2. To remove favorite device, use following method:
 
@@ -128,11 +144,21 @@ Datalogger uses Basic channel to send data pids and custom data pids. Datalogger
 
 Request VIN Number:
 
-```let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.VIN)```
+```
+/**
+ - parameter pid: Int (Pid Id)
+*/
+let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.VIN)
+```
 
 SDK uses following method to respond with received custom PID data:
 
 ```
+/**
+ - parameter responseCode: Int (0 if success)
+ - parameter pid: Int (Pid Id)
+ - parameter object: DLBasicPIDObject(Super class of all basic Object. Refer Page.57 of Installation guide to see Object class for respective PID)
+*/
 func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?){
     if responseCode != 0 {
        print("Response failed for pid:", " \(pid)")
@@ -154,11 +180,21 @@ func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?)
 
 Request MAF Rate:
 
-```let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.MAFRate)```
+```
+/**
+ - parameter pid: Int (Pid Id)
+*/
+let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.MAFRate)
+```
 
 SDK uses following method to respond with received Data Pid's data:
 
 ```
+/**
+ - parameter responseCode: Int (0 if success)
+ - parameter DPid: Int (Constant)
+ - parameter hashmap: Int - Pid Id, DLBasicPIDObject(Super class of all basic Object. Refer Page55-56 of Installation guide to see Object class for respective PID)
+*/
 func onDataPidDataReceived(responseCode: Int, DPid: Int, hashmap: [Int : DLBasicPIDObject]) {
         if responseCode != 0 {
             print("Received Failing Response Code")
@@ -185,11 +221,14 @@ Datalogger uses Advanced channel to send Event pids and Data pids. Mobile app ha
  2. Event PIDs (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
  **Note:** Event PIDs have to be preconfigured in datalogger to receive real time events.
 
-<br />
 ### Event PID using Advanced Channel:
+
 Request Hard brake, Hard acceleration, Idling event, trip start and trip end using Advanced channel.
 
 ```
+/**
+ - parameter pids: [Int] (Array of Pid Id)
+*/
 let isEPidsRegistered = gateway.registerEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration, DLEventID.idling, DLEventID.tripStart, DLEventID.tripEnd])
 ```
 
@@ -223,12 +262,12 @@ At a time, app can request maximum 5 pids. <br />
 Unregister Event Pids to stop receiving updates:
 ```
 /**
- - parameter pids: Array of Int(where Int is Pid Id. Eg. DLEventID.hardBraking)
+ - parameter pids: [Int](Array of Pid Id)
  - returns: true or false
 */
 unregisterEventPid(pids: [Int])-> Bool
 ```
-<br />
+
 ### Data PID using Advanced Channel:
 
 Request Vehicle Speed using Advanced channel for continous update.
@@ -236,7 +275,7 @@ Request Vehicle Speed using Advanced channel for continous update.
 ```
 /**
  - parameter DPid: constant Int value
- - parameter pids: Array of Int(where Int is Pid Id. Eg. DLCommandPId.basic.vehicleSpeed)
+ - parameter pids: [Int](Array of Pid Id)
 */
 
 gateway.registerDataPid(DPid: 1, pids: [DLCommandPId.basic.vehicleSpeed])
@@ -247,6 +286,11 @@ gateway.registerDataPid(DPid: 1, pids: [DLCommandPId.basic.vehicleSpeed])
 SDK uses following method to respond with received Data Pid's data:
 
 ```
+/**
+ - parameter responseCode: Int (0 if success)
+ - parameter DPid: Int (Constant)
+ - parameter hashmap: Int - Pid Id, DLBasicPIDObject(Super class of all basic Object. Refer Page55-56 of Installation guide to see Object class for respective PID)
+*/
 func onDataPidDataReceived(responseCode: Int, DPid: Int, hashmap: [Int : DLBasicPIDObject]) {
         if responseCode != 0 {
             print("Received Failing Response Code")
@@ -291,6 +335,9 @@ By default mobile app acts as pass thru to send UDP events to Danlaw Server. But
 1. Get instance of Bleap Interface
 
 ```
+/**
+ - parameter delegate: instance of implementing class DLBleapUDPDataDelegate
+*/
 do {
     var bleapInterface:DLBleapInterface
     try self.bleapInterface = DLBleapInterface.getInstance()
@@ -302,7 +349,12 @@ do {
 
 2. Set this flag to “false” to send acknowledgement manually.(Default value: true)
 
-```bleapInterface.onAutoSendAcknowledgement(onSendAcknowledgement: false)```
+```
+/**
+ - parameter onSendAcknowledgement: Bool (true by default)
+*/
+bleapInterface.onAutoSendAcknowledgement(onSendAcknowledgement: false)
+```
 
 **NOTE:**<br />
 If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again.<br />
@@ -311,6 +363,10 @@ Once acknowledgement is sent to datalogger, datalogger will erase that data from
 3. DLBleapUDPDataDelegate method to receive Parsed UDP Data:
 
 ```
+/**
+ - parameter udpMessages: [UDPMessage] (Array of UDPMessage. Refer Page.43 of Danlaw SmartConnect Installation guide)
+ - parameter acknowledgementId: Data
+*/
 func onBleapUDPDataParsed(udpMessages: [UDPMessage], acknowledgementId: Data) {
     
     /// Send acknowledgement here if "onSendAcknowledgement" is "false"
@@ -318,8 +374,8 @@ func onBleapUDPDataParsed(udpMessages: [UDPMessage], acknowledgementId: Data) {
     bleapInterface.udpPacketReceivedAcknowledgement(acknowledgementId: acknowledgementId)
     
     for message in udpMessages {
-       let messagePayload = message.messagePayload
-       let messageId = message.messageType
+       let messagePayload = message.messagePayload // Type of DLDataObject
+       let messageId = message.messageType // Type of Int
        switch messageId {
           case DLEventID.GPSMessage:
               guard let obj = messagePayload as? DLGPSMessage else { return }
