@@ -373,7 +373,7 @@ func onBleapUDPDataParsed(udpMessages: [UDPMessage], acknowledgementId: Data) {
 
 -	**App keeps receiving same UDP Events.**
     
-    If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again. Make sure if app has `onSendAcknowledgement` is set to `true` or app calls `udpPacketReceivedAcknowledgement` method to send acknowledgement manually.
+    If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again. Make sure if app has `onSendAcknowledgement` set to `true` or app calls `udpPacketReceivedAcknowledgement` method to send acknowledgement manually.
 
 
 # Credits
