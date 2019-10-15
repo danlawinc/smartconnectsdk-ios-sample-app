@@ -135,7 +135,7 @@ Datalogger uses Basic channel to send data pids and custom data pids. The reques
 Data that can be requested using Basic channel:<br />
  1. Standard Pids (id: 0-255)<br />
  2. Danlaw's Custom PIDs (id: 256 and over)<br />
-Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and their respective return Objects: 
+Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects: 
 
 Here is an example to request FuelLevel:
 
@@ -171,25 +171,23 @@ func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?)
 }
 ```
 
-# Register PID Data for Continuous  Updates
+# Register PID Data for Continuous Updates
+Registering for PID allows to receive data continuously until the request is unregistered. 
 
-Datalogger uses Advanced channel to send Event pids and Data pids. Mobile app has to register pids once and device will keep sending events for registered pids in real time.<br /> 
+A max of 5 PIDs can be registered in a single request.
+Data that can be requested:
+ - Only Standard PIDs (id: 0-255) are supported for continuous updates.
+ - Please refer the documentation for a complete list of the request IDs and their corresponding return object types. 
 
-- Data that can be requested using Advanced channel:<br />
- 1. Standard Pids (id: 0-255)<br />
- 
- Request Vehicle Speed using Advanced channel for continous update.
-
+An example to get continuous updates for the PIDs speed and engine rpm
 ```
 /**
  - parameter DPid: constant Int value
  - parameter pids: [Int](Array of Pid Id)
 */
 
-gateway.registerDataPid(DPid: 1, pids: [DLCommandPId.basic.vehicleSpeed])
+gateway.registerDataPid(DPid: 1, pids: [DLCommandPId.basic.vehicleSpeed, DLCommandPId.basic.engineRPM])
 ```
-
-**NOTE:** App can register multiple Data pids at a same time in array. But if one Data pid fails to register, then all the other pids are failed to register.<br /><br />
 
 SDK uses following method to respond with received Data Pid's data:
 
@@ -210,6 +208,11 @@ func onDataPidDataReceived(responseCode: Int, DPid: Int, hashmap: [Int : DLBasic
                     return}
                 if let value = speed.value {
                     print("\nVehicle Speed: \(value)")}
+            case DLCommandPId.basic.engineRPM:
+                guard let rpm = object as? DLEngineRPM else {
+                    return}
+                if let rpm = rpm.value {
+                    print("\nEngineRPM: \(rpm)")}
             default:
                 print("Data Pid received")
             }
@@ -230,10 +233,17 @@ unregisterDataPid(DPid: Int, pids: [Int]) -> Bool
 
 # Realtime Events:
 
-Event PIDs (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
- **Note:** Event PIDs have to be preconfigured in datalogger to receive real time events.
- 
-Request Hard brake, Hard acceleration, Idling event, trip start and trip end using Advanced channel.
+Registering for events allows to receive data in real-time when an event such as hard break, hard acceleration, cornering etc., is detected by the datalogger while the vehicle is being driven.<br /><br />
+
+Realtime events can only be received if the mobile is connected to the Datalogger when the event occurred. If the datalogger is not connected to a mobile device, event is delivered as a part of UDP Event the next time a connection is established.<br /><br />
+
+Data that can be requested:<br />
+
+- Custom events pre defined by Danlaw's communication protocol.
+- Please refer the documentation for a complete list of the request IDs and their corresponding return object types.
+A max of 5 event PIDs can be registered in a single request.
+
+Here's an example to register hard break and hard acceleration events:
 
 ```
 /**
@@ -242,7 +252,7 @@ Request Hard brake, Hard acceleration, Idling event, trip start and trip end usi
 let isEPidsRegistered = gateway.registerEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration])
 ```
 
-SDK uses following method to respond with received Event(Hard Braking event) data:
+SDK uses following method to respond with received Event data:
 
 ```
 /**
@@ -273,7 +283,6 @@ func onEventPidDataReceived(responseCode: Int, EPid: Int, object: DLDataObject?)
         }}
 }
 ```
-At a time, app can request maximum 5 pids. <br />
 
 Unregister Event Pids to stop receiving updates:
 ```
@@ -281,11 +290,8 @@ Unregister Event Pids to stop receiving updates:
  - parameter pids: [Int](Array of Pid Id)
  - returns: true or false
 */
-unregisterEventPid(pids: [Int])-> Bool
+unregisterEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration])-> Bool
 ```
-
-### Data PID using Advanced Channel:
-
 
 # UDP Events
 
@@ -294,7 +300,7 @@ App cannot register or unregister for UDP events.<br />
 By default mobile app acts as pass thru to send UDP events to Danlaw Server. But for datalogger with BLEAP configuration, UDP Events are delivered to the mobile app.
 
 - Data that can be received using UDP channel:<br />
- 1. Event PIDs (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
+ 1. Event PIDs<br />
  **Note:** Event PIDs have to be preconfigured in datalogger to receive udp events.
  
 - Implement `DLBleapInterface` and `DLBleapUDPDataDelegate` to receive UDP events sent by Device:
