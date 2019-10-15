@@ -284,7 +284,7 @@ unregisterEventPid(pids: [Int])-> Bool
 ### Data PID using Advanced Channel:
 
 
-# UDP Channel
+# UDP Events
 
 Datalogger logs every event occured in realtime and sends it via UDP channel when datalogger is connected to mobile app. 
 App cannot register or unregister for UDP events.<br />
@@ -361,19 +361,19 @@ func onBleapUDPDataParsed(udpMessages: [UDPMessage], acknowledgementId: Data) {
 # FAQ
 -	**No such module ‘SmartConnectSDK’**  
 
-    <br />Go to project's target settings. Make sure SDK is imported in General-> Framework, Libraries and Embedded content as well as in Build Phases-> Link Binary with Library and Build Phases-> Embed frameworks.
+    Go to project's target settings. Make sure SDK is imported in General-> Framework, Libraries and Embedded content as well as in Build Phases-> Link Binary with Library and Build Phases-> Embed frameworks.
   
 -	**Module compiled with Swift 5.1 cannot be imported by the Swift compiler 5.0.1**
 
-    <br />Please make sure you are using Xcode11+ to compile and build this app. If you need support for older verison of Xcode, please contact mobile@danlawinc.com.
+    Please make sure you are using Xcode11+ to compile and build this app. If you need support for older verison of Xcode, please contact mobile@danlawinc.com.
   
 -	**“App” requires provisioning profile.**
     
-    <br />Please make sure you have provided Developer team and valid code signing info in project's settings. You can try 'Automatically manage signing'. SDK is not code signed. Select 'Embed & Sign' in imported Framework's settings.
+    Please make sure you have provided Developer team and valid code signing info in project's settings. You can try 'Automatically manage signing'. SDK is not code signed. Select 'Embed & Sign' in imported Framework's settings.
 
 -	**App keeps receiving same UDP Events.**
     
-    
+    If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again. Make sure if app has `onSendAcknowledgement` is set to `true` or app calls `udpPacketReceivedAcknowledgement` method to send acknowledgement manually.
 
 
 # Credits
