@@ -11,12 +11,12 @@ To build the project, just **copy the SDK (.framework file) to Frameworks folder
 4. [Authentication](#authentication)
 5. [Connecting to Datalogger](#connecting-to-datalogger)
 6. [Auto-Connect](#auto-connect)
-7. [Basic Channel](#basic-channel)
-8. [Advanced Channel](#advanced-channel)
-9. [UDP Channel](#udp-channel)
-10. [FAQ](#faq)
-11. [Credits](#credits)
-
+7. [Get PID data](#get-pid-data)
+8. [Register PID Data for Continuous Updates](#register-pid-data-for-continuous-updates)
+9. [Realtime Events](#realtime-events)
+10. [UDP Events](#udp-events)
+11. [FAQ](#faq)
+12. [Credits](#credits)
 
 
 # Features
@@ -39,9 +39,7 @@ To build the project, just **copy the SDK (.framework file) to Frameworks folder
 # Installation
 - Create Framework directory inside your Project's root folder. Copy-paste iOS SDK provided by Danlaw. 
 - Go to Project's Target settings and import framework from the directory.
-- Replace ApiKey issued by Danlaw in 'LaunchScreenVC'
-
-```import SmartConnectSDK``` in swift file to access framework.
+- ```import SmartConnectSDK``` in swift file to access framework.
 
 # Component Library
 - DLAuthInterface: This class AuthInterface provides the entry point for the SDK. The hosting application should call the interface method validateToken to get the SDK authenticated. If the SDK is not authenticated, then none of the services that are offered by the SDK will be available.
@@ -82,13 +80,9 @@ func onAuthenticationResult(authenticationResult: Int, message: String)
 /**
  - parameter delegate: Instance of implementing class of DLGatewayDelegate
 */
-do {
-    var gateway:DLGatewayInterface
-    try gateway = DLGatewayInterface.getInstance()
-    gateway.setDelegate(delegate: self)
-}catch DLException.SdkNotAuthenticatedException(let error) {
-    print(error)
-}
+
+var gateway = DLGatewayInterface.getInstance()
+gateway.setDelegate(delegate: self)
 ``` 
 
 2. Scan for devices, scan results are received in delegate method of DLGatewayDelegate `onOBDDeviceFound`:
@@ -132,42 +126,40 @@ Add ```gateway.enableiBeaconServices(isBeaconMonitoring: true)``` and ```gateway
 Add required Privacy permission property keys in app's info.plist(Refer Page.13 of Danlaw SmartConnect Installation guide)
 
 
-# Basic Channel
+# Get PID Data
 
-Datalogger uses Basic channel to send data pids and custom data pids. Datalogger sends PID data once for each request made by Datalogger. Baic channel can be used to request data that does not require frequent update<br />
+Datalogger uses Basic channel to send data pids and custom data pids. Datalogger sends PID data once for each request made by Datalogger. Baisc channel can be used to request data that does not require frequent update<br />
 
 - Data that can be requested using Basic channel:<br />
- 1. Standard Pids (id: 0-255) (Refer Page.55-56 of Danlaw SmartConnect Installation guide)<br />
- 2. Danlaw's Custom PIDs (id: 256 and over) (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
+ 1. Standard Pids (id: 0-255) (List of Formatted PIDs of Danlaw SmartConnect Installation guide)<br />
+ 2. Danlaw's Custom PIDs (id: 256 and over) (List of Formatted PIDs of Danlaw SmartConnect Installation guide)<br />
 
-### Custom PID using Basic Channel:
-
-Request VIN Number:
+Here is an example to request FuelLevel:
 
 ```
 /**
  - parameter pid: Int (Pid Id)
 */
-let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.VIN)
+let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.fuelLevel)
 ```
 
-SDK uses following method to respond with received custom PID data:
+SDK uses following method to respond with received PID data:
 
 ```
 /**
  - parameter responseCode: Int (0 if success)
  - parameter pid: Int (Pid Id)
- - parameter object: DLBasicPIDObject(Super class of all basic Object. Refer Page.57 of Installation guide to see Object class for respective PID)
+ - parameter object: DLBasicPIDObject
 */
 func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?){
     if responseCode != 0 {
        print("Response failed for pid:", " \(pid)")
     } else {
       switch pid {
-        case DLCommandPId.basic.VIN: //Vin number
-            guard let vin = object as? DLVin else { return }
-                if let vinNo = vin.value {
-                    print("\nVIN: \(vinNo)")
+        case DLCommandPId.basic.fuelLevel: //Fuel Level
+            guard let fuelLevel = object as? DLFuelLevel else { return }
+                if let fuel = fuelLevel.value {
+                    print("\nFuel: \(fuel)")
                  }
          default:
              print("Basic data")
@@ -176,101 +168,14 @@ func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?)
 }
 ```
 
-### Data PID using Basic Channel:
-
-Request MAF Rate:
-
-```
-/**
- - parameter pid: Int (Pid Id)
-*/
-let isPidAvailable = gateway.readBasicPidData(pid: DLCommandPId.basic.MAFRate)
-```
-
-SDK uses following method to respond with received Data Pid's data:
-
-```
-/**
- - parameter responseCode: Int (0 if success)
- - parameter DPid: Int (Constant)
- - parameter hashmap: Int - Pid Id, DLBasicPIDObject(Super class of all basic Object. Refer Page55-56 of Installation guide to see Object class for respective PID)
-*/
-func onDataPidDataReceived(responseCode: Int, DPid: Int, hashmap: [Int : DLBasicPIDObject]) {
-        if responseCode != 0 {
-            print("Received Failing Response Code")
-            return }
-        for (pid, object) in hashmap {
-            switch pid {
-            case DLCommandPId.basic.MAFRate:
-               guard let maf = object as? DLMAFRate else {return}
-                if let mafValue = maf.value {
-                    print("\nMAFRate: \(mafValue)")}
-            default:
-                print("Data Pid received")
-            }
-        }
-    }
-```
-
-# Advanced Channel
+# Register PID Data for Continuous  Updates
 
 Datalogger uses Advanced channel to send Event pids and Data pids. Mobile app has to register pids once and device will keep sending events for registered pids in real time.<br /> 
 
 - Data that can be requested using Advanced channel:<br />
- 1. Standard Pids (id: 0-255) (Refer Page.55-56 of Danlaw SmartConnect Installation guide)<br />
- 2. Event PIDs (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
- **Note:** Event PIDs have to be preconfigured in datalogger to receive real time events.
-
-### Event PID using Advanced Channel:
-
-Request Hard brake, Hard acceleration, Idling event, trip start and trip end using Advanced channel.
-
-```
-/**
- - parameter pids: [Int] (Array of Pid Id)
-*/
-let isEPidsRegistered = gateway.registerEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration, DLEventID.idling, DLEventID.tripStart, DLEventID.tripEnd])
-```
-
-SDK uses following method to respond with received Event(Hard Braking event) data:
-
-```
-/**
- - parameter responseCode: 0 if success
- - parameter EPid: Pid Id
- - parameter object: DLDataObject (Super class of all event Object. Refer Page.57 of Installation guide to see Object class for each event)
-*/
-func onEventPidDataReceived(responseCode: Int, EPid: Int, object: DLDataObject?) {
-    if responseCode != 0 {
-        print("Received Failing Response Code")
-        return
-     }else {
-        switch EPid {
-            case DLEventID.hardBraking: // Hard Braking
-                guard let obj = object as? DLHardBrakingData else { return }
-                if let messageHeader = obj.header {
-                    print("Latitude: \(String(describing: messageHeader.lattitude)), Longitude: \(String(describing: messageHeader.longitude))")}
-                if let startSpeedInMph = obj.initialSpeed, let endSpeedInMph = obj.finalSpeed, let maxDecelInMphrSec = obj.maxBraking {
-                print("\nHard Brake Event:- StartSpeed(MpHr): \(startSpeedInMph), EndSpeed(MpHr): \(endSpeedInMph), MaxDecel: \(maxDecelInMphrSec)")}
-            default:
-                print("Event Pids")
-        }}
-}
-```
-At a time, app can request maximum 5 pids. <br />
-
-Unregister Event Pids to stop receiving updates:
-```
-/**
- - parameter pids: [Int](Array of Pid Id)
- - returns: true or false
-*/
-unregisterEventPid(pids: [Int])-> Bool
-```
-
-### Data PID using Advanced Channel:
-
-Request Vehicle Speed using Advanced channel for continous update.
+ 1. Standard Pids (id: 0-255)<br />
+ 
+ Request Vehicle Speed using Advanced channel for continous update.
 
 ```
 /**
@@ -318,6 +223,66 @@ Unregister Data Pids to stop receiving updates:
 */
 unregisterDataPid(DPid: Int, pids: [Int]) -> Bool
 ```
+
+
+# Realtime Events:
+
+Event PIDs (Refer Page.57 of Danlaw SmartConnect Installation guide)<br />
+ **Note:** Event PIDs have to be preconfigured in datalogger to receive real time events.
+ 
+Request Hard brake, Hard acceleration, Idling event, trip start and trip end using Advanced channel.
+
+```
+/**
+ - parameter pids: [Int] (Array of Pid Id)
+*/
+let isEPidsRegistered = gateway.registerEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration])
+```
+
+SDK uses following method to respond with received Event(Hard Braking event) data:
+
+```
+/**
+ - parameter responseCode: 0 if success
+ - parameter EPid: Pid Id
+ - parameter object: DLDataObject (Super class of all event Object. Refer Page.57 of Installation guide to see Object class for each event)
+*/
+func onEventPidDataReceived(responseCode: Int, EPid: Int, object: DLDataObject?) {
+    if responseCode != 0 {
+        print("Received Failing Response Code")
+        return
+     }else {
+        switch EPid {
+            case DLEventID.hardBraking: // Hard Braking
+                guard let obj = object as? DLHardBrakingData else { return }
+                if let messageHeader = obj.header {
+                    print("Latitude: \(String(describing: messageHeader.lattitude)), Longitude: \(String(describing: messageHeader.longitude))")}
+                if let startSpeedInMph = obj.initialSpeed, let endSpeedInMph = obj.finalSpeed, let maxDecelInMphrSec = obj.maxBraking {
+                print("\nHard Brake Event:- StartSpeed(MpHr): \(startSpeedInMph), EndSpeed(MpHr): \(endSpeedInMph), MaxDecel: \(maxDecelInMphrSec)")}
+            case DLEventID.hardAcceleration: // Hard Acceleration
+                guard let obj = object as? DLHardAccelerationData else { return }
+                if let messageHeader = obj.header {
+                    print("Latitude: \(String(describing: messageHeader.lattitude)), Longitude: \(String(describing: messageHeader.longitude))")}
+                if let startSpeedInMph = obj.initialSpeed, let endSpeedInMph = obj.finalSpeed, let maxAeccelInMphrSec = obj.maxAcceleration {
+                print("\nHard Acceleration Event:- StartSpeed(MpHr): \(startSpeedInMph), EndSpeed(MpHr): \(endSpeedInMph), MaxAeccel: \(maxAeccelInMphrSec)")}
+            default:
+                print("Event Pids")
+        }}
+}
+```
+At a time, app can request maximum 5 pids. <br />
+
+Unregister Event Pids to stop receiving updates:
+```
+/**
+ - parameter pids: [Int](Array of Pid Id)
+ - returns: true or false
+*/
+unregisterEventPid(pids: [Int])-> Bool
+```
+
+### Data PID using Advanced Channel:
+
 
 # UDP Channel
 
@@ -405,6 +370,10 @@ func onBleapUDPDataParsed(udpMessages: [UDPMessage], acknowledgementId: Data) {
 -	**“App” requires provisioning profile.**
     
     <br />Please make sure you have provided Developer team and valid code signing info in project's settings. You can try 'Automatically manage signing'. SDK is not code signed. Select 'Embed & Sign' in imported Framework's settings.
+
+-	**App keeps receiving same UDP Events.**
+    
+    
 
 
 # Credits
