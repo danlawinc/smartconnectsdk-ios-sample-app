@@ -53,21 +53,40 @@ To build the project, just **copy the SDK (.framework file) to Frameworks folder
 
 # Authentication
 After installing the SDK, **you MUST authenticate it before you can use all the interfaces**. 
-To authenticate the SDK, use the following method where `apiKey:` is "APiKey" issued by Danlaw, `issuedTo:` is project's main bundle and `delegate:` is instance of implementation class of `DLAuthDelegate`.
+To authenticate the SDK, use the following method:
 
 ```
+/**
+ - parameter apiKey: ApiKey issued by Danlaw Inc.
+ - parameter issuedTo: App's main bundle
+ - parameter delegate: Instance of implementing class of DLAuthDelegate
+*/
+// Request to SDK
 DLAuthInterface.sharedInstance.validateToken(apiKey: self.apiKey, issuedTo: Bundle.main, delegate: self)
 ```
-Once you get response code 200 in delegate method `func onAuthenticationResult(authenticationResult: Int, message: String)`, app will be able to access SmartConnectSDK. 
+
+SDK uses `DLAuthDelegate` method in response of `validateToken:`
+
+```
+// Response from SDK
+/**
+    - parameter authenticationResult: 200 in case of Success
+    - parameter message: Message from SDK success/error
+*/
+func onAuthenticationResult(authenticationResult: Int, message: String)
+``` 
 
 # Connecting to Datalogger
 1. Get an instance:
 
 ```
+/**
+ - parameter delegate: Instance of implementing class of DLGatewayDelegate
+*/
 do {
     var gateway:DLGatewayInterface
     try gateway = DLGatewayInterface.getInstance()
-    gateway.setDelegate(delegate: 'instance of implementing class of DLGatewayDelegate')
+    gateway.setDelegate(delegate: self)
 }catch DLException.SdkNotAuthenticatedException(let error) {
     print(error)
 }
@@ -83,7 +102,9 @@ do {
 
 # Auto-Connect
 
-1. Set favorite device to connect app to device automatically:
+SmartConnect SDK allows mobile app to connect to Datalogger automatically. To enable this feature, device must be set as favorite. SDK uses iBeacon Services and Location services to search for favorite datalogger. 
+
+1. Set a device as favorite:
 
 ```gateway.setFavoriteDevice(name: deviceName, identifier: identifier)```
 
@@ -91,8 +112,9 @@ do {
 
 ```gateway.forgetDevice()```
 
-Auto-connect requires Bluetooth access and Location service enabled to "Always".<br />
-Add ```gateway.enableiBeaconServices(isBeaconMonitoring: true)``` and ```gateway.startBackgroundScan(start: true)``` in ```func applicationDidEnterBackground(_ application: UIApplication)``` method to enable background wakeups
+Auto-connect requires Bluetooth access and Location service enabled to "Always".<br /> Auto connect works in all states of mobile app(Active, InActive, Background, Suspended, Non-Running)<br />
+Add ```gateway.enableiBeaconServices(isBeaconMonitoring: true)``` and ```gateway.startBackgroundScan(start: true)``` in ```func applicationDidEnterBackground(_ application: UIApplication)``` method to enable background wakeups<br />
+Add required Privacy permission property keys in app's info.plist(Refer Page.13 of Danlaw SmartConnect Installation guide)
 
 
 # Basic PIDs
