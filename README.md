@@ -128,11 +128,14 @@ Add required Privacy permission property keys in app's info.plist(Refer Page.13 
 
 # Get PID Data
 
-Datalogger uses Basic channel to send data pids and custom data pids. Datalogger sends PID data once for each request made by Datalogger. Baisc channel can be used to request data that does not require frequent update<br />
+Datalogger uses Basic channel to send data pids and custom data pids. The request can be made as often as needed, and the data will be returned once for every request.<br /> Basic channel can be used to request data that does not require frequent update<br />
+**Note:**<br />
+- PIDs requested using Basic channel comes in a sequential order.
 
-- Data that can be requested using Basic channel:<br />
- 1. Standard Pids (id: 0-255) (List of Formatted PIDs of Danlaw SmartConnect Installation guide)<br />
- 2. Danlaw's Custom PIDs (id: 256 and over) (List of Formatted PIDs of Danlaw SmartConnect Installation guide)<br />
+Data that can be requested using Basic channel:<br />
+ 1. Standard Pids (id: 0-255)<br />
+ 2. Danlaw's Custom PIDs (id: 256 and over)<br />
+Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and their respective return Objects: 
 
 Here is an example to request FuelLevel:
 
