@@ -309,7 +309,7 @@ By default mobile app acts as pass thru to send UDP events to Danlaw Server. But
 
 ```
 /**
- - parameter onSendAcknowledgement: Bool (true by default)
+ - parameter isAutoAcknowledgementOn: Bool (true by default)
 */
 gateway.setAutoAcknowledgement(isAutoAcknowledgementOn: false)
 ```
@@ -327,7 +327,7 @@ Once acknowledgement is sent to datalogger, datalogger will erase that data from
 */
 func onParsedUDPDataReceived(udpMessages: [UDPMessage], acknowledgementId: Data) {
     
-    /// Send acknowledgement here if "onSendAcknowledgement" is "false"
+    /// Send acknowledgement here if "isAutoAcknowledgementOn" is "false"
     
     gateway.udpPacketReceivedAcknowledgement(acknowledgementId: acknowledgementId)
     
@@ -366,7 +366,7 @@ func onParsedUDPDataReceived(udpMessages: [UDPMessage], acknowledgementId: Data)
 
 -	**App keeps receiving same UDP Events.**
     
-    If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again. Make sure if app has `onSendAcknowledgement` set to `true` or app calls `udpPacketReceivedAcknowledgement` method to send acknowledgement manually.
+    If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again. Make sure if app has `isAutoAcknowledgementOn` set to `true` or app calls `udpPacketReceivedAcknowledgement` method to send acknowledgement manually.
 
 
 # Credits
