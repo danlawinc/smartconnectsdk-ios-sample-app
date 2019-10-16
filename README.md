@@ -303,44 +303,33 @@ By default mobile app acts as pass thru to send UDP events to Danlaw Server. But
  1. Event PIDs<br />
  **Note:** Event PIDs have to be preconfigured in datalogger to receive udp events.
  
-- Implement `DLBleapInterface` and `DLBleapUDPDataDelegate` to receive UDP events sent by Device:
-<br />
 
-1. Get instance of Bleap Interface
 
-```
-/**
- - parameter delegate: instance of implementing class DLBleapUDPDataDelegate
-*/
-var bleapInterface = DLBleapInterface.getInstance()
-bleapInterface.setDelegate(delegate: self)
- ```
-
-2. Set this flag to “false” to send acknowledgement manually.(Default value: true)
+1. Set this flag to “false” to send acknowledgement manually.(Default value: true)
 
 ```
 /**
  - parameter onSendAcknowledgement: Bool (true by default)
 */
-bleapInterface.onAutoSendAcknowledgement(onSendAcknowledgement: false)
+gateway.setAutoAcknowledgement(isAutoAcknowledgementOn: false)
 ```
 
 **NOTE:**<br />
 If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again.<br />
 Once acknowledgement is sent to datalogger, datalogger will erase that data from its memory.<br />
 
-3. DLBleapUDPDataDelegate method to receive Parsed UDP Data:
+2. DLGatewayDelegate method to receive Parsed UDP Data:
 
 ```
 /**
  - parameter udpMessages: [UDPMessage] (Array of UDPMessage. Refer Page.43 of Danlaw SmartConnect Installation guide)
  - parameter acknowledgementId: Data
 */
-func onBleapUDPDataParsed(udpMessages: [UDPMessage], acknowledgementId: Data) {
+func onParsedUDPDataReceived(udpMessages: [UDPMessage], acknowledgementId: Data) {
     
     /// Send acknowledgement here if "onSendAcknowledgement" is "false"
     
-    bleapInterface.udpPacketReceivedAcknowledgement(acknowledgementId: acknowledgementId)
+    gateway.udpPacketReceivedAcknowledgement(acknowledgementId: acknowledgementId)
     
     for message in udpMessages {
        let messagePayload = message.messagePayload // Type of DLDataObject
