@@ -12,7 +12,7 @@ To build the project, just **copy the SDK (.framework file) to Frameworks folder
 5. [Connecting to Datalogger](#connecting-to-datalogger)
 6. [Auto-Connect](#auto-connect)
 7. [Get PID data (Basic Channel)](#get-pid-data-basic-channel)
-8. [Register PID Data for Continuous Updates (Advanced Channel)](#register-pid-data-for-continuous-updates-advanced-channel)
+8. [Register Data PIDs for Continuous Updates (Advanced Channel)](#register-data-pids-for-continuous-updates-advanced-channel)
 9. [Realtime Events (Advanced Channel)](#realtime-events-advanced-channel)
 10. [UDP Events (BLEAP)](#udp-events-bleap)
 11. [FAQ](#faq)
@@ -179,7 +179,7 @@ func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?)
 }
 ```
 
-# Register PID Data for Continuous Updates (Advanced Channel)
+# Register Data PIDs for Continuous Updates (Advanced Channel)
 Registering for PID allows to receive data continuously until the request is unregistered. 
 
 A max of 5 PIDs can be registered in a single request.
@@ -241,9 +241,9 @@ let isPidsUnregistered = gateway.unregisterDataPid(DPid: dataPidId, pids: [DLCom
 
 # Realtime Events (Advanced Channel)
 
-Registering for events allows to receive data in real-time when an event such as hard break, hard acceleration, cornering etc., is detected by the datalogger while the vehicle is being driven.<br /><br />
+Registering for events allows to receive data in real-time when an event such as hard break, hard acceleration, cornering etc., is detected by the datalogger while the vehicle is being driven.<br />
 
-Realtime events can only be received if the mobile is connected to the Datalogger when the event occurred. If the datalogger is not connected to a mobile device, event is delivered as a part of UDP Event the next time a connection is established.<br /><br />
+Realtime events can only be received if the mobile is connected to the Datalogger when the event occurred. If the datalogger is not connected to a mobile device, event is delivered as a part of UDP Event the next time a connection is established.<br />
 
 Data that can be requested:<br />
 
