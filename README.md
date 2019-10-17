@@ -239,7 +239,7 @@ Unregister Data Pids to stop receiving updates:
 let isPidsUnregistered = gateway.unregisterDataPid(DPid: dataPidId, pids: [DLCommandPId.basic.vehicleSpeed, DLCommandPId.basic.engineRPM])
 ```
 
-# Realtime Events:
+# Realtime Events (Advanced Channel)
 
 Registering for events allows to receive data in real-time when an event such as hard break, hard acceleration, cornering etc., is detected by the datalogger while the vehicle is being driven.<br /><br />
 
@@ -301,7 +301,7 @@ Unregister Event Pids to stop receiving updates:
 let isEventPidUnregistered = unregisterEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration])
 ```
 
-# UDP Events
+# UDP Events (BLEAP)
 
 Datalogger logs every event occured in realtime and sends it via UDP channel when datalogger is connected to mobile app. 
 App cannot register or unregister for UDP events.<br />
