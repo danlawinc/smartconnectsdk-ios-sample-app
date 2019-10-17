@@ -432,13 +432,13 @@
                                                                     <rect key="frame" x="180" y="0.0" width="170" height="40"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIv-ML-BDU">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="152.66666666666666" height="40"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="159.66666666666666" height="40"/>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6I-dc-ra9">
-                                                                            <rect key="frame" x="155.66666666666669" y="0.0" width="14.333333333333343" height="40"/>
+                                                                            <rect key="frame" x="162.66666666666669" y="0.0" width="7.3333333333333428" height="40"/>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -503,39 +503,46 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Sample UDP Channel Data" id="pgi-ww-WNL">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="cell1" rowHeight="140" id="4Jo-mO-M9L">
-                                        <rect key="frame" x="0.0" y="534" width="414" height="140"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="cell1" rowHeight="160" id="4Jo-mO-M9L">
+                                        <rect key="frame" x="0.0" y="534" width="414" height="160"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4Jo-mO-M9L" id="zxS-0F-56U">
-                                            <rect key="frame" x="0.0" y="0.0" width="370" height="140"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="370" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="lfs-Gx-YQx">
-                                                    <rect key="frame" x="10" y="10" width="350" height="120"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="lfs-Gx-YQx">
+                                                    <rect key="frame" x="10" y="10" width="350" height="140"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GPS Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qHz-7S-9zp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="350" height="15"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="350" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="45S-CI-Rd8">
-                                                            <rect key="frame" x="0.0" y="35" width="350" height="15"/>
+                                                            <rect key="frame" x="0.0" y="31" width="350" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longitude:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="p6p-Zk-3oh">
-                                                            <rect key="frame" x="0.0" y="70" width="350" height="15"/>
+                                                            <rect key="frame" x="0.0" y="62" width="350" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9X7-ff-9Ux">
-                                                            <rect key="frame" x="0.0" y="105" width="350" height="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9X7-ff-9Ux">
+                                                            <rect key="frame" x="0.0" y="93" width="350" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number Of Satellites:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NkV-7G-EIz">
+                                                            <rect key="frame" x="0.0" y="124" width="350" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                             <nil key="textColor"/>
@@ -557,7 +564,7 @@
                             <tableViewSection headerTitle="Auto Connect" id="D9n-XU-lHM">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="cell3" rowHeight="82" id="gSV-2n-Qf3">
-                                        <rect key="frame" x="0.0" y="730" width="414" height="82"/>
+                                        <rect key="frame" x="0.0" y="750" width="414" height="82"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gSV-2n-Qf3" id="2NE-Oj-5gH">
                                             <rect key="frame" x="0.0" y="0.0" width="370" height="82"/>
@@ -594,7 +601,7 @@
                             <tableViewSection headerTitle=" " id="akz-b0-C2G">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell4" rowHeight="60" id="cAe-gA-AI7">
-                                        <rect key="frame" x="0.0" y="868" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="888" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cAe-gA-AI7" id="ACG-TR-zjm">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -639,9 +646,10 @@
                         <outlet property="fuelLevel" destination="vPI-Cr-rul" id="l7F-hy-4em"/>
                         <outlet property="fuelLevelButton" destination="U5v-8l-fad" id="jrD-Uh-PAc"/>
                         <outlet property="gpsDataButton" destination="GEM-Kz-Vlf" id="tvy-kc-7TF"/>
-                        <outlet property="gpsMsgDate" destination="9X7-ff-9Ux" id="Xvf-wL-5uJ"/>
-                        <outlet property="gpsMsgLatitude" destination="45S-CI-Rd8" id="n0S-Cu-LCf"/>
-                        <outlet property="gpsMsgLongitude" destination="p6p-Zk-3oh" id="dLb-dy-V6J"/>
+                        <outlet property="gpsMsgDateLabel" destination="9X7-ff-9Ux" id="Xvf-wL-5uJ"/>
+                        <outlet property="gpsMsgLatitudeLabel" destination="45S-CI-Rd8" id="n0S-Cu-LCf"/>
+                        <outlet property="gpsMsgLongitudeLabel" destination="p6p-Zk-3oh" id="dLb-dy-V6J"/>
+                        <outlet property="gpsMsgNoOfSatelliteLabel" destination="NkV-7G-EIz" id="xHK-zu-raF"/>
                         <outlet property="latitudeLabel" destination="OGb-Y1-OUh" id="ydo-KN-hxL"/>
                         <outlet property="longitudeLabel" destination="8B0-4z-MxH" id="Smw-9W-GIJ"/>
                         <outlet property="registerDpidButton" destination="P0b-eQ-A7u" id="wfF-gi-IO3"/>

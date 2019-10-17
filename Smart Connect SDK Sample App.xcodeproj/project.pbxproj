@@ -14,7 +14,6 @@
 		6301A15F20D2A7FA00AECFCC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6301A15D20D2A7FA00AECFCC /* LaunchScreen.storyboard */; };
 		63BA33B320D2F3A7003DA8E4 /* LaunchScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BA33B220D2F3A7003DA8E4 /* LaunchScreenVC.swift */; };
 		63BA33BF20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BA33BE20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift */; };
-		6F9A93092350B3DF002F2081 /* UDPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9A93082350B3DF002F2081 /* UDPManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		6301A16020D2A7FA00AECFCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63BA33B220D2F3A7003DA8E4 /* LaunchScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenVC.swift; sourceTree = "<group>"; };
 		63BA33BE20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartConnectSdkPidRequestTVC.swift; sourceTree = "<group>"; };
-		6F9A93082350B3DF002F2081 /* UDPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UDPManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +61,6 @@
 				6301A15420D2A7F700AECFCC /* AppDelegate.swift */,
 				6301A15620D2A7F700AECFCC /* SmartConnectSdkVC.swift */,
 				63BA33BE20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift */,
-				6F9A93082350B3DF002F2081 /* UDPManager.swift */,
 				6301A15820D2A7F700AECFCC /* Main.storyboard */,
 				63BA33B220D2F3A7003DA8E4 /* LaunchScreenVC.swift */,
 				6301A15B20D2A7FA00AECFCC /* Assets.xcassets */,
@@ -145,7 +142,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F9A93092350B3DF002F2081 /* UDPManager.swift in Sources */,
 				6301A15720D2A7F700AECFCC /* SmartConnectSdkVC.swift in Sources */,
 				63BA33BF20D45385003DA8E4 /* SmartConnectSdkPidRequestTVC.swift in Sources */,
 				6301A15520D2A7F700AECFCC /* AppDelegate.swift in Sources */,

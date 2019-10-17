@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDelegate, UDPDataDelegate {
+class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDelegate {
     
     var delegate : DLDongleDelegate?
     @IBOutlet weak var fuelLevel: UILabel!
@@ -27,9 +27,10 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
     @IBOutlet weak var autoConnectSwitch: UISwitch!
     @IBOutlet weak var autoConnectLabel: UILabel!
     @IBOutlet weak var disConnectButton: UIButton!
-    @IBOutlet weak var gpsMsgLatitude: UILabel!
-    @IBOutlet weak var gpsMsgLongitude: UILabel!
-    @IBOutlet weak var gpsMsgDate: UILabel!
+    @IBOutlet weak var gpsMsgLatitudeLabel: UILabel!
+    @IBOutlet weak var gpsMsgLongitudeLabel: UILabel!
+    @IBOutlet weak var gpsMsgDateLabel: UILabel!
+    @IBOutlet weak var gpsMsgNoOfSatelliteLabel: UILabel!
     
     
     let defaults:UserDefaults = UserDefaults.standard
@@ -279,19 +280,18 @@ class SmartConnectSdkPidRequestTVC: UITableViewController,DLDongleConnectionDele
         self.eventValue.text = "--"
     }
     
-    func updateGPSMessageData(latitude: String, longitude: String, date: String) {
+    func updateGPSMessageData(latitude: String, longitude: String, date: String, noOfSatellite: Int) {
+                
+        DispatchQueue.main.async {
+            self.gpsMsgDateLabel.text = "Date: \(date)"
+            self.gpsMsgLatitudeLabel.text = "Latitude: \(latitude)"
+            self.gpsMsgLongitudeLabel.text = "Longitude: \(longitude)"
+            self.gpsMsgNoOfSatelliteLabel.text = "Number Of Satellites: \(noOfSatellite)"
+        }
         
-        print("reached to tableview controller")
-        
-        gpsMsgDate.text = date
-        gpsMsgLatitude.text = latitude
-        gpsMsgLongitude.text = longitude
     }
 }
 
-protocol UDPDataDelegate {
-    func updateGPSMessageData(latitude: String, longitude: String, date: String)
-}
 
 //DLDongleDelegate is passing data from self class to SmartConnectSdkVC. 
 protocol DLDongleDelegate {
@@ -304,4 +304,5 @@ protocol DLDongleDelegate {
     func unRegisterEventPids()
     func registerFavDevieandIdentifier(deviceName: String, identifier: String)
     func unRegisterFavDevieandIdentifier(deviceName: String, identifier: String)
+
 }

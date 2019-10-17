@@ -44,21 +44,15 @@ class LaunchScreenVC: UIViewController,DLAuthDelegate {
                 {
                     //confirming delegate
                     self.gatewayDelegate = vc.self
-                    self.gatewayDelegate?.getwayGetInstance()
-                    
-                    /// Get Bleap interface instance only if you are creating app for Bleap-Device
-                    vc.bleapGetInstance()
-                    
+                    self.gatewayDelegate?.gatwayGetInstance()
                     //Navigating to Main Screen After getting GatewayInstance
                     let navController = UINavigationController(rootViewController: vc)
                     navController.modalPresentationStyle = .fullScreen
                     self.present(navController, animated:true, completion: nil)
                 }
-                
             }else{
                 
                 print(message)
-                
                 //display alert or some custom action
                 //App won't start in this condition So please request new Token from  mobile@danlawinc.com and make sure you have internet connection
                 
@@ -68,7 +62,7 @@ class LaunchScreenVC: UIViewController,DLAuthDelegate {
     
     
 }
-//Once Authentication validation successful trying to get GatewayInstance and for that added bellow protocal that can be implemented in SmartConnectSdkVC
+//Once Authentication validation successful, get DLGatewayInterface instance. Here, `protocol gatewayInterfaceInstance` is created to call this method in SmartConnectSdkVC
 protocol gatewayInterfaceInstance{
-    func getwayGetInstance()
+    func gatwayGetInstance()
 }
