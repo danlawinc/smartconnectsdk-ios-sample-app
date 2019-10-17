@@ -185,7 +185,7 @@ Registering for PID allows to receive data continuously until the request is unr
 A max of 5 PIDs can be registered in a single request.
 Data that can be requested:
  - Only Standard PIDs (id: 0-255) are supported for continuous updates.
-Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects. 
+<br />Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects. 
 
 An example to get continuous updates for the PIDs speed and engine rpm
 ```
@@ -204,7 +204,7 @@ SDK uses following method to respond with received Data Pid's data:
 /**
  - parameter responseCode: Int (0 if success)
  - parameter DPid: Int (Constant)
- - parameter hashmap: Int - Pid Id, DLBasicPIDObject(Super class of all basic Object. Refer Page55-56 of Installation guide to see Object class for respective PID)
+ - parameter hashmap: Int - Pid Id, DLBasicPIDObject
 */
 func onDataPidDataReceived(responseCode: Int, DPid: Int, hashmap: [Int : DLBasicPIDObject]) {
         if responseCode != 0 {
@@ -248,7 +248,7 @@ Realtime events can only be received if the mobile is connected to the Datalogge
 Data that can be requested:<br />
 
 - Custom events pre defined by Danlaw's communication protocol.
-Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects.
+<br />Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects.
 A max of 5 event PIDs can be registered in a single request.
 
 Here's an example to register hard break and hard acceleration events:
@@ -266,7 +266,7 @@ SDK uses following method to respond with received Event data:
 /**
  - parameter responseCode: 0 if success
  - parameter EPid: Pid Id
- - parameter object: DLDataObject (Super class of all event Object. Refer Page.57 of Installation guide to see Object class for each event)
+ - parameter object: DLDataObject 
 */
 func onEventPidDataReceived(responseCode: Int, EPid: Int, object: DLDataObject?) {
     if responseCode != 0 {
