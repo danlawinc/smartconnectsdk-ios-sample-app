@@ -19,11 +19,9 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
     var gatewayDelegate: gatewayInterfaceInstance?
     var alertView: UIAlertController?
     var gateway:DLGatewayInterface?
-    var bleapInterface:DLBleapInterface?
     var connectionDelegate : DLDongleConnectionDelegate?
     var currentConnectionIndex: Int?
     let defaults:UserDefaults = UserDefaults.standard
-    var udpManager: UDPManager?
     var pids: [String: Int] = [//getting pids from sdk and storing it in dict
         "speed": DLCommandPId.basic.vehicleSpeed,
         "rpm": DLCommandPId.basic.engineRPM,
@@ -189,7 +187,7 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
     }
     
     //gatewayInterfaceInstance Delegate method Implementation. Getting Interface of Gateway and setting delegate to get DLGatewayDelegate callback methods.
-    func getwayGetInstance() {
+    func gatwayGetInstance() {
         DispatchQueue.main.async {
             do {
                 try self.gateway = DLGatewayInterface.getInstance()
@@ -201,21 +199,6 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
             }
         }
         
-    }
-
-    func bleapGetInstance() {
-        DispatchQueue.main.async {
-            do {
-                //var bleapInterface:DLBleapInterface
-                try self.bleapInterface = DLBleapInterface.getInstance()
-                self.udpManager = UDPManager(bleapInterface: self.bleapInterface!)
-                self.bleapInterface!.setDelegate(delegate: self.udpManager!)
-            }catch DLException.SdkNotAuthenticatedException(let error) {
-                print(error)
-            }catch let error1 as NSError{
-                print(error1)
-            }
-        }
     }
     
     //DLDongleDelegate methods
@@ -246,15 +229,15 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
     
     //Once registerDataPids delegate method will triggered here passing specific basic/Advanced pid number and Sends the request to the DataLogger to register an array of data Pids. Once pid number sent and if it's supported by Vechicle App will get response data. DPid: The ID of the Pid Array
     func registerDataPids() {
-        guard
-            let speed = pids["speed"],
-            let rpm = pids["rpm"]
+    
+        let vehicleSpeedDpid = 1
+        let _ = gateway?.registerDataPid(DPid: vehicleSpeedDpid, pids: [DLCommandPId.basic.vehicleSpeed])
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
-            else {
-                return
+            let rpmDpid = 2
+            let _ = self.gateway?.registerDataPid(DPid: rpmDpid, pids: [DLCommandPId.basic.engineRPM])
         }
-        let _ = gateway?.registerDataPid(DPid: 1, pids: [speed])
-        let _ = gateway?.registerDataPid(DPid: 2, pids: [rpm])
     }
     
     //Once unregisterDataPids delegate method will triggered here passing specific basic/Advanced DPid: The ID of the Pid Array and it sends the request to the DataLogger to unregister data Pid. Once pid ID sent App will get response data through calback.
@@ -292,6 +275,10 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
      
             gateway?.forgetDevice()
         
+    }
+    
+    func setAutoAcknowledgement(isAutoAcknowledgementOn: Bool) {
+        gateway?.setAutoAcknowledgement(isAutoAcknowledgementOn: isAutoAcknowledgementOn)
     }
     
     //Once App gets response for the Basic/Advanced pids this func will call upon the onBasicDataReceived and onDataPidDataReceived call backs from sdk. Here checking by pid if pid match getting particular data of that object and passing along.
@@ -366,6 +353,24 @@ class SmartConnectSdkVC: UIViewController,gatewayInterfaceInstance,DLDongleDeleg
         return index
     }
     
+    func setGPSMessage(timestamp: Date,lat: Double, long: Double, noOfSatellite: Int){
+        
+        let latitude = "\(lat)"
+        let longitude = "\(long)"
+        let date = displayDateFormat(withDate: timestamp)
+        connectionDelegate?.updateGPSMessageData(latitude: latitude, longitude: longitude, date: date, noOfSatellite: noOfSatellite)
+    }
+    
+    func displayDateFormat(withDate: Date) -> String {
+        let formatter = DateFormatter()
+        let current = Calendar.current
+        let dateComponents = current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: withDate)
+        let startTime = current.date(from: dateComponents)
+        formatter.dateFormat = "M/d/yy h:mm:ss a"
+        let displayTime = formatter.string(from: startTime!)
+        return displayTime
+    }
+    
 }
 
 //Custom Singleton Class to store required properties to access through out the app.
@@ -388,10 +393,10 @@ protocol DLDongleConnectionDelegate {
     func setEventPidsData(value: Double, eventPidName: String)
     func unRegisterDPids(isSuccess: Bool)
     func unRegisterEPids(isSuccess: Bool)
+    func updateGPSMessageData(latitude: String, longitude: String, date: String, noOfSatellite: Int)
 }
 
 extension SmartConnectSdkVC: DLGatewayDelegate{
-    
     
     //This will trigger once StopScan called from app or from sdk. If scantime done after starts scan it will get scanTimeOut is true, if user click on device and starts connection progress it will return false.
     func onScanStopped(scanTimeOut: Bool) {
@@ -424,7 +429,7 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
             self.dismissAlert()
             let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "pidInfo") as! SmartConnectSdkPidRequestTVC
             VC1.delegate = self
-            udpManager!.udpDelegate = VC1
+            //udpManager!.udpDelegate = VC1
             self.connectionDelegate = VC1.self as? DLDongleConnectionDelegate
             self.navigationController?.pushViewController(VC1, animated: false)
         }else if connectionStatus == DLConnectionStatus.checkingHealthStatusFailed || connectionStatus == DLConnectionStatus.authenticationFailed || connectionStatus == DLConnectionStatus.disconnected{
@@ -469,8 +474,6 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
     
     //This call back will triggered once App send command to registerData pids. Please find more in sdk document.Gateway uses this method once it receives the response from the DataLogger for the `registerDataPid` interface call
     func onDataPidRegistered(responseCode: Int, DPid: Int) {
-        print(responseCode, DPid)
-        
         if responseCode == DLResponseCode.success {
             
         } else {
@@ -492,7 +495,6 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
     
     //This call back will triggered once App send command to unregisterData pids. Please find more in sdk document.Gateway uses this method once it receives the response from the DataLogger for the `unregisterDataPid` interface call
     func onDataPidUnregistered(responseCode: Int, DPid: Int) {
-        print(DPid)
         if responseCode == DLResponseCode.success {
             //delegate method to pass response code
             connectionDelegate?.unRegisterDPids(isSuccess: true)
@@ -563,6 +565,49 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
         }
     }
     
+    
+    /// Raw UDP data callback when UDP packet is received by mobile device
+    func onRawUDPDataReceived(rawUDPData: Data, acknowledgementId: Data) {
+        
+    }
+    
+    /// Parsed UDP Messages call back when SDK completes parsing of UDP data sent by Datalogger
+    func onParsedUDPDataReceived(udpMessages: [UDPMessage], acknowledgementId: Data) {
+        
+        for message in udpMessages {
+            
+            let messagePayload = message.messagePayload
+            let messageId = message.messageType
+            
+            switch messageId {
+                
+            case DLEventID.GPSMessage:
+                
+                print("gps msg received")
+                guard let obj = messagePayload as? DLGPSMessage else {
+                    return
+                }
+                guard let messageHeader = obj.header else {
+                    return
+                }
+                
+                self.getMessageHeaderData(messageHeader: messageHeader)
+                if let time = messageHeader.time, let lat = messageHeader.lattitude, let long = messageHeader.longitude {
+                    setGPSMessage(timestamp: time, lat: lat, long: long, noOfSatellite: obj.noOfSatellite)
+                }
+            // Handle more events here
+            default:
+                return
+                
+            }
+        }
+    }
+    
+    ///Fota callback in response of FotaDowload request for Bleap Devices.
+    func fotaDowloadRequest(responseCode: Int) {
+        
+    }
+    
     //wifi callback response for adding wifi network to device
     func addingWiFiNetwork(responseCode: Int) {
         
@@ -575,6 +620,21 @@ extension SmartConnectSdkVC: DLGatewayDelegate{
     
     //wifi callback to response it will all the available list of wifi network names for that device
     func configureListWiFiNetworks(responseCode: Int, data: [String]) {
+        
+    }
+    
+    
+    /// Message header data is sent in all Events and it has same paramters
+    func getMessageHeaderData(messageHeader: DLMessageHeader) {
+        
+        print("\nTime: \(String(describing: messageHeader.time))")
+        print("\nLatitude: \(String(describing: messageHeader.lattitude))")
+        print("\nLongitude: \(String(describing: messageHeader.longitude))")
+        print("\nFix Quality: \(messageHeader.fixQuality)")
+        print("\nOdometer: \(String(describing: messageHeader.odo))")
+        print("\nTrip Number: \(String(describing: messageHeader.tripNumberH))")
+        print("\nTrip State: \(String(describing: messageHeader.tripState))")
+        print("\nVehicle Protocol: \(String(describing: messageHeader.vehicleProtocol))")
         
     }
     
