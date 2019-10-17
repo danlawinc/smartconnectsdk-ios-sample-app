@@ -344,11 +344,10 @@ func onParsedUDPDataReceived(udpMessages: [UDPMessage], acknowledgementId: Data)
        let messageId = message.messageType // Type of Int
        switch messageId {
           case DLEventID.GPSMessage:
-              guard let obj = messagePayload as? DLGPSMessage else { return }
-              guard let messageHeader = obj.header else { return }
-              if let time = messageHeader.time, let lat = messageHeader.lattitude, let long = messageHeader.longitude {                         print(“Latitude: \(lat), Longitude:\(long), time: \(time)”) }
-               if let satellite = obj.noOfSatellite {
-                  print(“No of Satellites: \(satellite)”)}
+            guard let obj = messagePayload as? DLGPSMessage else { return }
+            guard let messageHeader = obj.header else { return }
+            if let time = messageHeader.time, let lat = messageHeader.lattitude, let long = messageHeader.longitude {                        print("Latitude: \(lat), Longitude:\(long), time: \(time), No of Satellites: \(obj.noOfSatellite)" )
+            }
            // Handle more events here
           default:
             return       
