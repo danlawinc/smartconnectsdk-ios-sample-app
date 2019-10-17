@@ -297,7 +297,7 @@ Unregister Event Pids to stop receiving updates:
  - parameter pids: [Int](Array of Pid Id)
  - returns: true or false
 */
-unregisterEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration])-> Bool
+let isEventPidUnregistered = unregisterEventPid(pids: [DLEventID.hardBraking, DLEventID.hardAcceleration])
 ```
 
 # UDP Events
