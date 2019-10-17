@@ -11,10 +11,10 @@ To build the project, just **copy the SDK (.framework file) to Frameworks folder
 4. [Authentication](#authentication)
 5. [Connecting to Datalogger](#connecting-to-datalogger)
 6. [Auto-Connect](#auto-connect)
-7. [Get PID data](#get-pid-data)
-8. [Register PID Data for Continuous Updates](#register-pid-data-for-continuous-updates)
-9. [Realtime Events](#realtime-events)
-10. [UDP Events](#udp-events)
+7. [Get PID data (Basic Channel)](#get-pid-data-basic-channel)
+8. [Register PID Data for Continuous Updates (Advanced Channel)](#register-pid-data-for-continuous-updates-advanced-channel)
+9. [Realtime Events (Advanced Channel)](#realtime-events-advanced-channel)
+10. [UDP Events (BLEAP)](#udp-events-bleap)
 11. [FAQ](#faq)
 12. [Credits](#credits)
 
@@ -45,8 +45,7 @@ To build the project, just **copy the SDK (.framework file) to Frameworks folder
 - DLAuthInterface: This class AuthInterface provides the entry point for the SDK. The hosting application should call the interface method validateToken to get the SDK authenticated. If the SDK is not authenticated, then none of the services that are offered by the SDK will be available.
 - DLGatewayInterface: This class handles communication between the app and the SDK. It provides the outward facing methods for interacting with the Danlaw iOS SDK.
 - DLGatewayDelegate: This `protocol DLGatewayDelegate` defines the callbacks required for the delegate on the `DLGatewayInterface`.
-- DLBleapInterface: This class handles communication between the app and SDK for UDP events. This interface has to be implemented only if mobile app uses Bleap Datalogger
-- DLBleapUDPDataDelegate: This `protocol DLBleapUDPDataDelegate` defines the callbacks required for the delegate on the `DLBleapInterface`.
+
 
 # Authentication
 After installing the SDK, **app MUST authenticate it before it can use all the interfaces**. 
@@ -70,7 +69,16 @@ SDK uses `DLAuthDelegate` method in response of `validateToken:`
     - parameter authenticationResult: 200 in case of Success
     - parameter message: Message from SDK success/error
 */
-func onAuthenticationResult(authenticationResult: Int, message: String)
+func onAuthenticationResult(authenticationResult: Int, message: String) {
+     if authenticationResult == 200{
+        //SDK Authenticated
+        // Get DLGatewayInterface Instance
+        // Confirm DLGatewayDelegate 
+     }
+     else{
+        print("Authentication Message: \(message)")            
+     }
+}
 ``` 
 
 # Connecting to Datalogger
@@ -126,16 +134,16 @@ Add ```gateway.enableiBeaconServices(isBeaconMonitoring: true)``` and ```gateway
 Add required Privacy permission property keys in app's info.plist(Refer 'Getting started with iOS' section of Danlaw SmartConnect Installation guide)
 
 
-# Get PID Data
+# Get PID Data (Basic Channel)
 
-Datalogger uses Basic channel to send data pids and custom data pids. The request can be made as often as needed, and the data will be returned once for every request.<br /> Basic channel can be used to request data that does not require frequent update<br />
+Datalogger uses Basic channel to send data pids and custom pids. The request can be made as often as needed, and the data will be returned once for every request.<br /> Basic channel can be used to request data that does not require frequent update<br />
 **Note:**<br />
-- PIDs requested using Basic channel comes in a sequential order.
+- Basic channel executes each PIDs in sequential order. 
 
 Data that can be requested using Basic channel:<br />
  1. Standard Pids (id: 0-255)<br />
  2. Danlaw's Custom PIDs (id: 256 and over)<br />
-Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects: 
+Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects. 
 
 Here is an example to request FuelLevel:
 
@@ -171,13 +179,13 @@ func onBasicDataReceived(responseCode: Int, pid: Int, object: DLBasicPIDObject?)
 }
 ```
 
-# Register PID Data for Continuous Updates
+# Register PID Data for Continuous Updates (Advanced Channel)
 Registering for PID allows to receive data continuously until the request is unregistered. 
 
 A max of 5 PIDs can be registered in a single request.
 Data that can be requested:
  - Only Standard PIDs (id: 0-255) are supported for continuous updates.
- - Please refer the documentation for a complete list of the request IDs and their corresponding return object types. 
+Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects. 
 
 An example to get continuous updates for the PIDs speed and engine rpm
 ```
@@ -227,9 +235,8 @@ Unregister Data Pids to stop receiving updates:
  - parameter pids: Array of Int(where Int is Pid Id. Eg. DLCommandPId.basic.vehicleSpeed)
  - returns: true or false
 */
-unregisterDataPid(DPid: Int, pids: [Int]) -> Bool
+let isPidsUnregistered = gateway.unregisterDataPid(DPid: 1, pids: [DLCommandPId.basic.vehicleSpeed, DLCommandPId.basic.engineRPM])
 ```
-
 
 # Realtime Events:
 
@@ -240,7 +247,7 @@ Realtime events can only be received if the mobile is connected to the Datalogge
 Data that can be requested:<br />
 
 - Custom events pre defined by Danlaw's communication protocol.
-- Please refer the documentation for a complete list of the request IDs and their corresponding return object types.
+Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects.
 A max of 5 event PIDs can be registered in a single request.
 
 Here's an example to register hard break and hard acceleration events:
@@ -303,7 +310,6 @@ By default mobile app acts as pass thru to send UDP events to Danlaw Server. But
  1. Event PIDs<br />
  **Note:** Event PIDs have to be preconfigured in datalogger to receive udp events.
  
-
 
 1. Set this flag to “false” to send acknowledgement manually.(Default value: true)
 
