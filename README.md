@@ -306,9 +306,10 @@ Datalogger logs every event occured in realtime and sends it via UDP channel whe
 App cannot register or unregister for UDP events.<br />
 By default mobile app acts as pass thru to send UDP events to Danlaw Server. But for datalogger with BLEAP configuration, UDP Events are delivered to the mobile app.
 
-- Data that can be received using UDP channel:<br />
- 1. Event PIDs<br />
- **Note:** Event PIDs have to be preconfigured in datalogger to receive udp events.
+Data that can be received using UDP channel:<br />
+ - Custom events pre defined by Danlaw's communication protocol<br />
+ Refer 'List of Formatted PIDs' section of Danlaw SmartConnect Installation guide for a complete list of the PID IDs and its respective return Objects.<br />
+ **Note:** Events have to be preconfigured in datalogger to receive udp events.
  
 
 1. Set this flag to “false” to send acknowledgement manually.(Default value: true)
@@ -328,7 +329,7 @@ Once acknowledgement is sent to datalogger, datalogger will erase that data from
 
 ```
 /**
- - parameter udpMessages: [UDPMessage] (Array of UDPMessage. Refer Page.43 of Danlaw SmartConnect Installation guide)
+ - parameter udpMessages: [UDPMessage] (Properties of UDPMessage: messagePayload:Type of DLDataObject, messageId- type of Int)
  - parameter acknowledgementId: Data
 */
 func onParsedUDPDataReceived(udpMessages: [UDPMessage], acknowledgementId: Data) {
@@ -372,7 +373,7 @@ func onParsedUDPDataReceived(udpMessages: [UDPMessage], acknowledgementId: Data)
 
 -	**App keeps receiving same UDP Events.**
     
-    If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again. Make sure if app has `isAutoAcknowledgementOn` set to `true` or app calls `udpPacketReceivedAcknowledgement` method to send acknowledgement manually.
+    If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again. Make sure if app has `isAutoAcknowledgementOn` set to `true` or if app calls `udpPacketReceivedAcknowledgement` method to send acknowledgement manually.
 
 
 # Credits
