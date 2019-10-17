@@ -194,7 +194,8 @@ An example to get continuous updates for the PIDs speed and engine rpm
  - parameter pids: [Int](Array of Pid Id)
 */
 
-gateway.registerDataPid(DPid: 1, pids: [DLCommandPId.basic.vehicleSpeed, DLCommandPId.basic.engineRPM])
+let dataPidId = 1
+gateway.registerDataPid(DPid: dataPidId, pids: [DLCommandPId.basic.vehicleSpeed, DLCommandPId.basic.engineRPM])
 ```
 
 SDK uses following method to respond with received Data Pid's data:
@@ -235,7 +236,7 @@ Unregister Data Pids to stop receiving updates:
  - parameter pids: Array of Int(where Int is Pid Id. Eg. DLCommandPId.basic.vehicleSpeed)
  - returns: true or false
 */
-let isPidsUnregistered = gateway.unregisterDataPid(DPid: 1, pids: [DLCommandPId.basic.vehicleSpeed, DLCommandPId.basic.engineRPM])
+let isPidsUnregistered = gateway.unregisterDataPid(DPid: dataPidId, pids: [DLCommandPId.basic.vehicleSpeed, DLCommandPId.basic.engineRPM])
 ```
 
 # Realtime Events:
@@ -375,6 +376,25 @@ func onParsedUDPDataReceived(udpMessages: [UDPMessage], acknowledgementId: Data)
     
     If app fails to send acknowledgement to datalogger, datalogger will keep sending same data again. Make sure if app has `isAutoAcknowledgementOn` set to `true` or if app calls `udpPacketReceivedAcknowledgement` method to send acknowledgement manually.
 
+- **Continuous Updates/Realtime event request failed.**
+
+  Although you can register upto 5 PIDs per request, if any of the PIDs is not supported by the vehicle or if data is not available, the entire request fails.
+
+  Try registering the PIDs individually to see which request fails.
+
+  For example, instead of registering speed and rpm together in a single request, break it into 2 requests.
+
+  ```
+  let vehicleSpeedDPid = 1
+  let _ = gateway?.registerDataPid(DPid: vehicleSpeedDPid, pids: [DLCommandPId.basic.vehicleSpeed])
+        
+   // Registering other PID after 1 sec delay to avoid receiving "Datalogger busy" error
+   DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+      let rpmDPid = 2
+      let _ = self.gateway?.registerDataPid(DPid: rpmDPid, pids: [DLCommandPId.basic.engineRPM])
+   }
+   ```
+**NOTE:** Only Standard PIDs(id: 0-255) are supported for continuous updates. Danlaw's Custom PIDs (id: 256 and over) must be requested everytime a new value is needed.
 
 # Credits
 SmartConnect sample app and SmartConnectSDK is owned by Danlaw Inc. A valid license is required to use Danlaw’s Smart Connect products. Licenses are issued by Danlaw on an annual basis for a rolling twelve-month effective time period. License fees established by Danlaw are comprised of a baseline minimum fee, plus a per device fee for each active device at the time of the annual Smart Connect license renewal. Please contact mobile@danlawinc.com for the Key and Licensing information.
